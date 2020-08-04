@@ -1,6 +1,7 @@
 package baliviya.com.github.eduBot.dao;
 
 import baliviya.com.github.eduBot.dao.impl.*;
+import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
 import baliviya.com.github.eduBot.util.PropertiesUtil;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -45,4 +46,16 @@ public class DaoFactory {
     public EmployeeCategoryDao                  getEmployeeCategoryDao() {  return new EmployeeCategoryDao(); }
 
     public TaskDao                              getTaskDao() {              return new TaskDao(); }
+
+    public CitizensInfoDao                      getCitizensInfoDao() {      return new CitizensInfoDao();}
+
+    public ReceptionDao                         getReceptionDao() {         return new ReceptionDao(); }
+
+    public CitizensRegistrationDao              getCitizensRegistrationDao(){return new CitizensRegistrationDao();    }
+
+    public MapDao                               getMapDao() {               return new MapDao(); }
+
+    public EventDao                             getEventDao() {             return new EventDao();}
+
+    public RegistrationEventDao                 getRegistrationEventDao() { return new RegistrationEventDao();    }
 }

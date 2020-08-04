@@ -2,15 +2,18 @@ package baliviya.com.github.eduBot.util;
 
 import baliviya.com.github.eduBot.dao.DaoFactory;
 import baliviya.com.github.eduBot.dao.impl.KeyboardMarkUpDao;
+import baliviya.com.github.eduBot.entity.custom.Map;
 import baliviya.com.github.eduBot.entity.enums.ParseMode;
 import baliviya.com.github.eduBot.entity.standart.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.meta.api.methods.send.SendContact;
+import org.telegram.telegrambots.meta.api.methods.send.SendLocation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Contact;
+import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -97,4 +100,16 @@ public class BotUtil {
 
     public boolean  hasContactOwner(Update update) { return (update.hasMessage() && update.getMessage().hasContact()) && Objects.equals(update.getMessage().getFrom().getId(), update.getMessage().getContact().getUserID()); }
 
+    public Location sendLocation(long chat_id, Map map) {
+        SendLocation sendLocation = new SendLocation();
+        sendLocation.setChatId(chat_id);
+        sendLocation.setLongitude(map.getLongitude());
+        sendLocation.setLatitude(map.getLatitude());
+        try {
+            return bot.execute(sendLocation).getLocation();
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
