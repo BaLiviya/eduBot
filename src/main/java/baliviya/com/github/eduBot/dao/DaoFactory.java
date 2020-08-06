@@ -2,6 +2,7 @@ package baliviya.com.github.eduBot.dao;
 
 import baliviya.com.github.eduBot.dao.impl.*;
 import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
+import baliviya.com.github.eduBot.entity.custom.Quest;
 import baliviya.com.github.eduBot.util.PropertiesUtil;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -57,5 +58,13 @@ public class DaoFactory {
 
     public EventDao                             getEventDao() {             return new EventDao();}
 
-    public RegistrationEventDao                 getRegistrationEventDao() { return new RegistrationEventDao();    }
+    public RegistrationEventDao                 getRegistrationEventDao() { return new RegistrationEventDao();}
+
+    public QuestDao                             getQuestDao()                  { return new QuestDao(); }
+
+    public SurveyDao                            getSurveyDao()                 { return new SurveyDao(); }
+
+    public TaskArchiveDao                       getTaskArchiveDao()              {return new TaskArchiveDao();}
+
+//    public AdminDao                             getAdminDao()                  { return new AdminDao(); }
 }

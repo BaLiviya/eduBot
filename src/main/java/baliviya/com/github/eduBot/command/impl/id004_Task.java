@@ -8,6 +8,8 @@ import baliviya.com.github.eduBot.entity.enums.WaitingType;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
 import baliviya.com.github.eduBot.util.Const;
 import baliviya.com.github.eduBot.util.DateUtil;
+import baliviya.com.github.eduBot.util.components.IKeyboardOld;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
@@ -72,6 +74,8 @@ public class id004_Task extends Command {
 
     private void        sendMessageToEmployee(String name, int taskId, StringBuilder employeeName) {
         StringBuilder messageToEmployee = new StringBuilder();
+        ReplyKeyboard select;
+        select = keyboardMarkUpDao.select(7);
 //        messageToEmployee.append(getLinkT("Обращение # " + taskId)).append(next);
         messageToEmployee.append("<b>Обращение # </b>" + taskId).append(next);
         messageToEmployee.append("<b>Заявитель : </b>").append(name).append(next);
@@ -81,8 +85,8 @@ public class id004_Task extends Command {
 
         for (EmployeeCategory employee : employeeCategoryDao.getByCategoryId(task.getCategoryId())) {
             long directId               = employee.getEmployeeChatId();
-//            IKeyboardOld kb             = new IKeyboardOld();
-//            kb.next();
+          IKeyboardOld kb             = new IKeyboardOld();
+          kb.next();
 //            List<SuggestionFile> filesList  = factory.getSuggestionFileDao().getFilesList(taskId);
 //            for (SuggestionFile doc : filesList) {
 //                try {
@@ -98,7 +102,7 @@ public class id004_Task extends Command {
 //                } catch (TelegramApiException e) { e.printStackTrace(); }
 //            }
             try {
-                sendMessage(messageToEmployee.toString(), directId);
+                sendMessageWithKeyboard(messageToEmployee.toString(), select, directId);
             } catch (TelegramApiException e) { e.printStackTrace(); }
         }
 //        ReplyKeyboard select;

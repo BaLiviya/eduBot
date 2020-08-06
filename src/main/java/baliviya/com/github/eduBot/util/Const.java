@@ -14,6 +14,7 @@ public class Const {
     public static final int COMMAND_NOT_FOUND                       =    1;
     public static final int WELCOME_TEXT_WHEN_START                 =    2;
     public static final int EDIT_BUTTON_ICON                        =    3;
+    public static final int NO_ACCESS                               =    12;
 
     public static final int SET_FULL_NAME_MESSAGE                   = 1001;
     public static final int WRONG_DATA_TEXT                         = 1002;

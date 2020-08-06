@@ -25,6 +25,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Slf4j
 @NoArgsConstructor
 public abstract class Command {
@@ -40,20 +43,20 @@ public abstract class Command {
     protected               DefaultAbsSender     bot;
     protected               Long                 chatId;
     protected               Message              updateMessage;
-    protected               String               updateMessageText;
+    protected String                             updateMessageText;
     protected               int                  updateMessageId;
-    protected               String               editableTextOfMessage;
-    protected               String               updateMessagePhoto;
-    protected               String               updateMessagePhone;
-    protected               String               markChange;
+    protected java.lang.String editableTextOfMessage;
+    protected java.lang.String updateMessagePhoto;
+    protected java.lang.String updateMessagePhone;
+    protected String markChange;
     protected               int                  lastSendMessageID;
     protected final static  boolean              EXIT                        = true;
     protected final static  boolean              COMEBACK                    = false;
     protected               WaitingType          waitingType                 = WaitingType.START;
-    protected static final  String               next                        = "\n";
-    protected static final  String               space                       = " ";
-    protected               String               nextButton                  = ">>";
-    protected               String               prevButton                  = "<<";
+    protected static final  String next                        = "\n";
+    protected static final  String space                       = " ";
+    protected               String nextButton                  = ">>";
+    protected               String prevButton                  = "<<";
 
     protected static DaoFactory             factory                 = DaoFactory.getInstance();
     protected static MessageDao             messageDao              = factory.getMessageDao();
@@ -64,82 +67,92 @@ public abstract class Command {
     protected static EmployeeCategoryDao    employeeCategoryDao     = factory.getEmployeeCategoryDao();
     protected static TaskDao                taskDao                 = factory.getTaskDao();
 //    protected static AdminDao               adminDao                = factory.getAdminDao();
-//    protected static SuggestionDao          suggestionDao           = factory.getSuggestionDao();
-//    protected static RecipientDao           recipientDao            = factory.getRecipientDao();
-//    protected static QuestionDao            questionDao             = factory.getQuestionDao();
-//    protected static QuestMessageDao        questMessageDao         = factory.getQuestMessageDao();
-//    protected static EventDao               eventDao                = factory.getEventDao();
-//    protected static ServiceQuestionDao     serviceQuestionDao      = factory.getServiceQuestionDao();
-//    protected static ServiceSurveyAnswerDao serviceSurveyAnswerDao  = factory.getServiceSurveyAnswerDao();
-//    protected static HandlingDao            handlingDao             = factory.getHandlingDao();
-//    protected static GroupDao               groupDao                = factory.getGroupDao();
-//    protected static PropertiesDao          propertiesDao           = factory.getPropertiesDao();
-//    protected static CategoryGroupDao       categoryGroupDao        = factory.getCategoryGroupDao();
-//    protected static CategoryDao            categoryDao             = factory.getCategoryDao();
-//    protected static SpecialistDao          specialistDao           = factory.getSpecialistDao();
+    protected static QuestDao               questDao                = factory.getQuestDao();
+    protected static SurveyDao               surveyDao              = factory.getSurveyDao();
+    protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
 
-    public abstract boolean execute()                                                           throws TelegramApiException;
+    public abstract boolean execute()                                                           throws TelegramApiException, IOException, SQLException;
 
-    protected int     sendMessageWithKeyboard(int messageId, ReplyKeyboard keyboard)            throws TelegramApiException { return sendMessageWithKeyboard(getText(messageId), keyboard); }
+    protected int           sendMessageWithKeyboard(int messageId, ReplyKeyboard keyboard)                  throws TelegramApiException {
+        return sendMessageWithKeyboard(getText(messageId), keyboard);
+    }
 
-    protected int     sendMessageWithKeyboard(String text, int keyboardId)                      throws TelegramApiException { return sendMessageWithKeyboard(text, keyboardMarkUpDao.select(keyboardId)); }
+    protected int           sendMessageWithKeyboard(String text, int keyboardId)                            throws TelegramApiException {
+        return sendMessageWithKeyboard(text, keyboardMarkUpDao.select(keyboardId));
+    }
 
-    protected int     sendMessageWithKeyboard(String text, ReplyKeyboard keyboard)              throws TelegramApiException {
+    protected int           sendMessageWithKeyboard(String text, ReplyKeyboard keyboard)                    throws TelegramApiException {
         lastSendMessageID = sendMessageWithKeyboard(text, keyboard, chatId);
         return lastSendMessageID;
     }
 
-    protected int     sendMessageWithKeyboard(String text, ReplyKeyboard keyboard, long chatId) throws TelegramApiException { return botUtils.sendMessageWithKeyboard(text, keyboard, chatId); }
+    protected int           sendMessageWithKeyboard(String text, ReplyKeyboard keyboard, long chatId)       throws TelegramApiException {
+        return botUtils.sendMessageWithKeyboard(text, keyboard, chatId);
+    }
 
-    protected int     sendMessage(String text)                                                  throws TelegramApiException { return sendMessage(text, chatId); }
+    protected int           sendMessage(String text)                                                        throws TelegramApiException {
+        return sendMessage(text, chatId);
+    }
 
-    protected int     sendMessage(String text, long chatId)                                     throws TelegramApiException { return sendMessage(text, chatId, null); }
+    protected int           sendMessage(String text, long chatId)                                           throws TelegramApiException {
+        return sendMessage(text, chatId, null);
+    }
 
-    protected int     sendMessage(String text, long chatId, Contact contact)                    throws TelegramApiException {
+    protected int           sendMessage(String text, long chatId, Contact contact)                          throws TelegramApiException {
         lastSendMessageID = botUtils.sendMessage(text, chatId);
-        if (contact != null) botUtils.sendContact(chatId, contact);
+        if (contact != null) { botUtils.sendContact(chatId, contact); }
         return lastSendMessageID;
     }
 
-    protected int     sendMessage(long messageId)                                               throws TelegramApiException { return sendMessage(messageId, chatId); }
+    protected int           sendMessage(long messageId)                                                     throws TelegramApiException {
+        return sendMessage(messageId, chatId);
+    }
 
-    protected int     sendMessage(long messageId, long chatId)                                  throws TelegramApiException { return sendMessage(messageId, chatId, null); }
+    protected int           sendMessage(long messageId, long chatId)                                        throws TelegramApiException {
+        return sendMessage(messageId, chatId, null);
+    }
 
-    protected int     sendMessage(long messageId, long chatId, Contact contact)                 throws TelegramApiException { return sendMessage(messageId, chatId, contact, null); }
+    protected int           sendMessage(long messageId, long chatId, Contact contact)                       throws TelegramApiException {
+        return sendMessage(messageId, chatId, contact, null);
+    }
 
-    protected int     sendMessage(long messageId, long chatId, Contact contact, String photo)   throws TelegramApiException {
+    protected int           sendMessage(long messageId, long chatId, Contact contact, String photo)         throws TelegramApiException {
         lastSendMessageID = botUtils.sendMessage(messageId, chatId, contact, photo);
         return lastSendMessageID;
     }
 
-    protected int     toDeleteKeyboard(int messageDeleteId) {
+    protected int           toDeleteKeyboard(int messageDeleteId) {
         SetDeleteMessages.addKeyboard(chatId, messageDeleteId);
         return messageDeleteId;
     }
 
-    protected int     sendMessageWithKeyboardTest(String text, ReplyKeyboard keyboard, long chatID) throws TelegramApiException {
+    protected int           sendMessageWithKeyboardTest(String text, ReplyKeyboard keyboard, long chatID)   throws TelegramApiException {
         SendMessage sendMessage = new SendMessage().setParseMode(ParseMode.HTML).setChatId(chatID).setText(text).setReplyMarkup(keyboard);
         sendMessageTest(text, sendMessage);
         return lastSendMessageID;
     }
 
-    protected int     toDeleteMessage(int messageDeleteId) {
+    protected int           toDeleteMessage(int messageDeleteId) {
         SetDeleteMessages.addKeyboard(chatId, messageDeleteId);
         return messageDeleteId;
     }
 
-    public    void    clear() {
+    public    void          clear() {
         update  = null;
         bot     = null;
     }
 
-    protected void    deleteMessage(int messageId) { deleteMessage(chatId, messageId); }
+    protected void          deleteMessage(int messageId) {
+        deleteMessage(chatId, messageId);
+    }
 
-    protected void    deleteMessage(long chatId, int messageId) { botUtils.deleteMessage(chatId, messageId); }
+    protected void          deleteMessage(long chatId, int messageId) {
+        botUtils.deleteMessage(chatId, messageId);
+    }
 
-    private   void    sendMessageTest(String text, SendMessage sendMessage)                     throws TelegramApiException {
+    private   void          sendMessageTest(String text, SendMessage sendMessage)                           throws TelegramApiException {
         try {
-            lastSendMessageID = bot.execute(sendMessage).getMessageId();
+            lastSendMessageID     = bot.execute(sendMessage).getMessageId();
         } catch (TelegramApiRequestException e) {
             if (e.getApiResponse().contains("Bad Request: can't parse entities")) {
                 sendMessage.setParseMode(null);
@@ -149,7 +162,7 @@ public abstract class Command {
         }
     }
 
-    protected void    sendMessageWithAddition()                                                 throws TelegramApiException {
+    protected void          sendMessageWithAddition()                                                       throws TelegramApiException {
         deleteMessage(updateMessageId);
         baliviya.com.github.eduBot.entity.standart.Message message = messageDao.getMessage(messageId);
         sendMessage(messageId, chatId, null, message.getPhoto());
@@ -169,11 +182,15 @@ public abstract class Command {
         }
     }
 
-    protected String  getLinkForUser(long chatId, String userName) { return String.format("<a href = \"tg://user?id=%s\">%s</a>", chatId, userName); }
+    protected String        getLinkForUser(long chatId, String userName) {
+        return String.format("<a href = \"tg://user?id=%s\">%s</a>", chatId, userName);
+    }
 
-    protected String  getText(int messageIdFromDb) { return messageDao.getMessageText(messageIdFromDb); }
+    protected String        getText(int messageIdFromDb) {
+        return messageDao.getMessageText(messageIdFromDb);
+    }
 
-    public    boolean isInitNormal(Update update, DefaultAbsSender bot) {
+    public    boolean       isInitNormal(Update update, DefaultAbsSender bot) {
         if (botUtils == null) botUtils = new BotUtil(bot);
         this.update = update;
         this.bot    = bot;
@@ -185,44 +202,70 @@ public abstract class Command {
             updateMessageId             = updateMessage.getMessageId();
             editableTextOfMessage       = callbackQuery.getMessage().getText();
         } else if (update.hasMessage()) {
-            updateMessage               = update.getMessage();
-            updateMessageId             = updateMessage.getMessageId();
+            updateMessage   = update.getMessage();
+            updateMessageId = updateMessage.getMessageId();
             if (updateMessage.hasText()) updateMessageText = updateMessage.getText();
             if (updateMessage.hasPhoto()) {
-                int size                = update.getMessage().getPhoto().size();
-                updateMessagePhoto      = update.getMessage().getPhoto().get(size - 1).getFileId();
+                int size            = update.getMessage().getPhoto().size();
+                updateMessagePhoto  = update.getMessage().getPhoto().get(size - 1).getFileId();
             } else {
-                updateMessagePhoto      = null;
+                updateMessagePhoto  = null;
             }
         }
         if (hasContact()) updateMessagePhone = update.getMessage().getContact().getPhoneNumber();
         if (markChange == null) markChange = getText(Const.EDIT_BUTTON_ICON);
-        return false;
+        return COMEBACK;
     }
 
-//    protected boolean isRecipient() {return recipientDao.isRecipient(chatId); }
+    //protected boolean       isAdmin() {
+//        return adminDao.isAdmin(chatId);
+    //}
 
-    protected boolean isRegistered() { return userDao.isRegistered(chatId); }
+    protected boolean       hasContact() {
+        return update.hasMessage() && update.getMessage().getContact() != null;
+    }
 
-//    protected boolean isAdmin() { return adminDao.isAdmin(chatId); }
+    protected boolean       isButton(int buttonId) {
+        return updateMessageText.equals(buttonDao.getButtonText(buttonId));
+    }
 
-//    protected boolean isMainAdmin() { return adminDao.isMainAdmin(chatId); }
+    protected boolean       hasCallbackQuery() { return update.hasCallbackQuery();}
 
-    protected boolean hasContact() { return update.hasMessage() && update.getMessage().getContact() != null; }
+    protected boolean       hasMessageText() {
+        return update.hasMessage() && update.getMessage().hasText();
+    }
 
-    protected boolean isButton(int buttonId) { return updateMessageText.equals(buttonDao.getButtonText(buttonId)); }
+    protected boolean       hasPhoto() {
+        return update.hasMessage() && update.getMessage().hasPhoto();
+    }
 
-    protected boolean hasCallbackQuery() { return update.hasCallbackQuery();}
+    protected boolean       hasDocument() {
+        return update.hasMessage() && update.getMessage().hasDocument();
+    }
 
-    protected boolean hasMessageText() { return update.hasMessage() && update.getMessage().hasText(); }
+    protected boolean       hasAudio() {
+        return update.hasMessage() && update.getMessage().getAudio() != null;
+    }
 
-    protected boolean hasPhoto() { return update.hasMessage() && update.getMessage().hasPhoto(); }
+    protected boolean       hasVideo() {
+        return update.hasMessage() && update.getMessage().getVideo() != null;
+    }
 
-    protected boolean hasDocument() { return update.hasMessage() && update.getMessage().hasDocument(); }
+    protected boolean       isRegistered() { return userDao.isRegistered(chatId); }
 
-    protected boolean hasAudio() { return update.hasMessage() && update.getMessage().getAudio() != null; }
+//    protected boolean       isCitizenEmployee() { return factory.getCitizensEmployeeDao().isCitizenEmployee(chatId); }
 
-    protected boolean hasVideo() { return update.hasMessage() && update.getMessage().getVideo() != null; }
+    protected String        getBolt(String s) { return "<b>" + s + "</b>"; }
 
-    protected String  getBolt(String s) { return "<b>" + s + "</b>"; }
-}
+//    protected boolean       isEmployee() {
+//        return factory.getEmployeeSuggestionDao().isEmployee(chatId);
+//    }
+
+//    protected boolean       isEmployeeCategory() { return factory.getCategoryEmployeeDao().isEmployeeCategory(chatId); }
+
+//    protected boolean       isOperator() { return factory.getOperatorDao().isOperator(chatId); }
+
+
+
+ }
+

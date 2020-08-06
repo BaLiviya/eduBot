@@ -9,6 +9,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +24,11 @@ public class Bot extends TelegramLongPollingBot {
     private String                  nameBot;
 
     @Override
-    public void             onUpdateReceived(Update update) {
+    public void             onUpdateReceived(Update update)  {
         Conversation conversation = getConversation(update);
         try {
             conversation.handleUpdate(update, this);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException | IOException | SQLException e) {
             log.error("Error №" + e);
         }
     }

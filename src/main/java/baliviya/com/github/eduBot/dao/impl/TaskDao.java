@@ -13,6 +13,11 @@ public class TaskDao extends AbstractDao<Task> {
         return (int) getDBUtils().updateForKeyId(sql, task.getStatusId(), task.getTaskText(), task.getDateBegin(), task.getPeopleId(), task.getPeopleName(), task.getMessageId(), task.getEmployeeId());
     }
 
+    public Task get(int id){
+        sql = "SELECT * FROM TASK WHERE ID = ?";
+        return getJdbcTemplate().queryForObject(sql,setParam(id),this::mapper);
+    }
+
     @Override
     protected Task mapper(ResultSet rs, int index) throws SQLException {
         Task task = new Task();

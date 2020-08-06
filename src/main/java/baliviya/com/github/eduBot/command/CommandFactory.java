@@ -26,6 +26,18 @@ public class CommandFactory {
                 return new id005_Citizens();
             case 8:
                 return new id008_Regulations();
+            case 10:
+                return new id010_SurveyQuestion();
+            case 11:
+                return new id011_SurveyReport();
+            case 12:
+                return new id012_ShowAdminInfo();
+            case 13:
+                return new id013_EditSurvey();
+            case 14:
+                return new id014_DoneTask();
+            case 15:
+                return new id015_NotCompletedTask();
             case 500:
                 return new id500_Map();
             case 501:

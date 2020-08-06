@@ -18,6 +18,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 
 @Slf4j
@@ -29,7 +31,7 @@ public class Conversation {
     private         Command         command;
     private         CommandService  commandService = new CommandService();
 
-    public          void handleUpdate(Update update, DefaultAbsSender bot) throws TelegramApiException {
+    public          void handleUpdate(Update update, DefaultAbsSender bot) throws TelegramApiException, IOException, SQLException {
         printUpdate(update);
         chatId          = UpdateUtil.getChatId(update);
         currentChatId   = chatId;
