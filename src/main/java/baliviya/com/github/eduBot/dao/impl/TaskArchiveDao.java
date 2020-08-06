@@ -21,7 +21,7 @@ public class TaskArchiveDao extends AbstractDao<TaskArchive> {
     }
 
     public List<TaskArchive>  getTasksArchive(int id){
-        sql = "SELECT * FROM TASK_ARCHIEVE WHERE TASK_ID = ?";
+        sql = "SELECT * FROM TASK_ARCHIVE WHERE TASK_ID = ?";
         return getJdbcTemplate().query(sql, setParam(id), this::mapper);
     }
 

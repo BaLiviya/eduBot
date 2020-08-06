@@ -9,14 +9,20 @@ import java.sql.SQLException;
 public class TaskDao extends AbstractDao<Task> {
 
     public int insert(Task task) {
-        sql = "INSERT INTO TASK (ID_STATUS, TASK_TEXT, DATE_BEGIN, PEOPLE_ID, PEOPLE_NAME, MESSAGE_ID, EMPLOYEE_ID) VALUES (?,?,?,?,?,?,?)";
-        return (int) getDBUtils().updateForKeyId(sql, task.getStatusId(), task.getTaskText(), task.getDateBegin(), task.getPeopleId(), task.getPeopleName(), task.getMessageId(), task.getEmployeeId());
+        sql = "INSERT INTO TASK (ID_STATUS, TASK_TEXT, DATE_BEGIN, PEOPLE_ID, PEOPLE_NAME, MESSAGE_ID, EMPLOYEE_ID, CATEGORY_ID) VALUES (?,?,?,?,?,?,?,?)";
+        return (int) getDBUtils().updateForKeyId(sql, task.getStatusId(), task.getTaskText(), task.getDateBegin(), task.getPeopleId(), task.getPeopleName(), task.getMessageId(), task.getEmployeeId(), task.getCategoryId());
     }
 
     public Task get(int id){
         sql = "SELECT * FROM TASK WHERE ID = ?";
         return getJdbcTemplate().queryForObject(sql,setParam(id),this::mapper);
     }
+
+    public void updateStatus(int taskId, int idStatus){
+        sql = "UPDATE TASK SET ID_STATUS = ? WHERE ID = ?";
+        getJdbcTemplate().update(sql, idStatus, taskId);
+    }
+
 
     @Override
     protected Task mapper(ResultSet rs, int index) throws SQLException {
@@ -29,7 +35,7 @@ public class TaskDao extends AbstractDao<Task> {
         task.setPeopleName(rs.getString(6));
         task.setCategoryId(rs.getInt(7));
         task.setMessageId(rs.getInt(8));
-        task.setEmployeeId(rs.getLong(9));
+        task.setEmployeeId(rs.getInt(9));
         return task;
     }
 }

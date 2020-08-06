@@ -15,5 +15,5 @@ public class Task {
     private String  peopleName;
     private int     categoryId;
     private int     messageId;
-    private long    employeeId;
+    private long     employeeId;
 }
