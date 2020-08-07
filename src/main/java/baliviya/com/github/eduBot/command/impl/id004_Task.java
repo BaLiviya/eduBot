@@ -50,8 +50,9 @@ public class id004_Task extends Command {
                     categoryId          = categories.get(Integer.parseInt(updateMessageText)).getId();
                     task.setCategoryId(categoryId);
                     employeeCategories  = employeeCategoryDao.getByCategoryId(categoryId);
-//                    long employeeId = employeeCategories.get(Integer.parseInt(updateMessageText)).getEmployeeChatId();
-//                    task.setEmployeeId(employeeId);
+                    for (EmployeeCategory employeeCategory : employeeCategoryDao.getByCategoryId(categoryId)){
+                        task.setEmployeeId(employeeCategory.getEmployeeChatId());
+                    }
                     deleteMessageId     = sendMessage(Const.SEND_TEXT_HANDLING_MESSAGE);
                     waitingType         = WaitingType.HANDLING_TEXT;
                 }

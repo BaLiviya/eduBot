@@ -26,7 +26,7 @@ public class id600_CompletedAppeal extends Command {
         deleteMessage(updateMessageId);
         switch (waitingType){
             case START:
-                tasks = factory.getTaskDao().getAllTasks(1,chatId);
+                tasks = factory.getTaskDao().getAllTasks(1, chatId);
                 list = new ArrayList<>();
                 tasks.forEach(e -> list.add(e.getPeopleName()));
                 buttonsLeaf = new ButtonsLeaf(list);

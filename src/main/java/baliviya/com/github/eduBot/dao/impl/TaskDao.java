@@ -16,9 +16,9 @@ public class TaskDao extends AbstractDao<Task> {
         return (int) getDBUtils().updateForKeyId(sql, task.getStatusId(), task.getTaskText(), task.getDateBegin(), task.getPeopleId(), task.getPeopleName(), task.getMessageId(), task.getEmployeeId(), task.getCategoryId());
     }
 
-    public List<Task> getAllTasks(int idStatus, long employee_id){
+    public List<Task> getAllTasks(int idStatus, long employeeChatId){
         sql = "SELECT * FROM TASK WHERE ID_STATUS = ? AND EMPLOYEE_ID = ?";
-        return getJdbcTemplate().query(sql,setParam(idStatus, employee_id),this::mapper);
+        return getJdbcTemplate().query(sql,setParam(idStatus, employeeChatId),this::mapper);
     }
     public Task get(int id){
         sql = "SELECT * FROM TASK WHERE ID = ?";

@@ -37,9 +37,8 @@ public class id014_DoneTask extends Command {
                 deleteMessage (updateMessageId);
                 deleteMessage(deleteMessageId);
                 if(hasMessageText()){
-                    taskArchiveDao.insert("<b>Выполнено</b>:" + updateMessageText, task.getId(), true);
+                    taskArchiveDao.insert("<b>Выполнено</b>:" + updateMessageText, task.getId());
                     closeTask();
-//                    task.setStatusId(1);
                     return COMEBACK;
                 }
         }
