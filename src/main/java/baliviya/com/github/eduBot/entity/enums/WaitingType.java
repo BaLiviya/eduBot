@@ -11,5 +11,5 @@ public enum WaitingType {
     START_DATE, END_DATE,
     CHOICE_OPTION,
     SET_TEXT,
-    DONE, CHOICE_APPEAL, NOT_COMPLETED // id014_QuestionTask
+    DONE, CHOICE_APPEAL, BACK_BUTTON_IN_MENU, NOT_COMPLETED // id014_QuestionTask
 }
