@@ -10,9 +10,9 @@ import java.util.List;
 
 public class TaskArchiveDao extends AbstractDao<TaskArchive> {
 
-    public void                  insert(String text, int taskId){
-        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID) VALUES(?,?)";
-        getJdbcTemplate().update(sql, text, taskId);
+    public void                  insert(String text, int taskId, boolean isCompleted){
+        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID, COMPLETED) VALUES(?,?,?)";
+        getJdbcTemplate().update(sql, text, taskId, isCompleted);
     }
 
     public void                  insert(String text, int taskId, String date){
@@ -24,6 +24,11 @@ public class TaskArchiveDao extends AbstractDao<TaskArchive> {
         sql = "SELECT * FROM TASK_ARCHIVE WHERE TASK_ID = ?";
         return getJdbcTemplate().query(sql, setParam(id), this::mapper);
     }
+
+//    public List<TaskArchive> getAllCompletedTasksArchive(){
+//        sql = "SELECT * FROM TASK_ARCHIVE WHERE COMPLETED = TRUE ";
+//        return getJdbcTemplate().query(sql, this::mapper);
+//    }
 
     public TaskArchive getTaskArchive(int id) {
         sql = "SELECT * FROM TASK_ARCHIVE WHERE TASK_ID = ?";
@@ -41,7 +46,9 @@ public class TaskArchiveDao extends AbstractDao<TaskArchive> {
         taskArchive.setId(rs.getInt(1));
         taskArchive.setText(rs.getString(2));
         taskArchive.setTaskId(rs.getInt(3));
-        taskArchive.setId(rs.getInt(4));
+        taskArchive.setDate(rs.getString(4));
+        taskArchive.setCompleted(rs.getBoolean(5));
+//        taskArchive.setEmployeeId(rs.getLong(6));
         return taskArchive;
     }
 }

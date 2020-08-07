@@ -10,5 +10,7 @@ public class TaskArchive {
     private String  text;
     private int     taskId;
     private String  date;
+    private boolean completed;
+    private long employeeId;
 
 }

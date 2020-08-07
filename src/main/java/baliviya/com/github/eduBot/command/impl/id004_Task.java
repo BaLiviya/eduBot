@@ -87,8 +87,8 @@ public class id004_Task extends Command {
 
         for (EmployeeCategory employee : employeeCategoryDao.getByCategoryId(task.getCategoryId())) {
             long directId               = employee.getEmployeeChatId();
-          IKeyboardOld kb             = new IKeyboardOld();
-          kb.next();
+//            IKeyboardOld kb             = new IKeyboardOld();
+//            kb.next();
 //            List<SuggestionFile> filesList  = factory.getSuggestionFileDao().getFilesList(taskId);
 //            for (SuggestionFile doc : filesList) {
 //                try {
@@ -104,7 +104,7 @@ public class id004_Task extends Command {
 //                } catch (TelegramApiException e) { e.printStackTrace(); }
 //            }
             try {
-                sendMessageWithKeyboard(messageToEmployee.toString(), select, directId);
+                sendMessageWithKeyboard(messageToEmployee.toString(),select, directId);
             } catch (TelegramApiException e) { e.printStackTrace(); }
         }
 //        ReplyKeyboard select;

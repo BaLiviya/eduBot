@@ -54,8 +54,6 @@ public class id005_Citizens extends Command {
             case SET_FULL_NAME:
                 deleteMessage(updateMessageId);
                 if (update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().length() <= 50) {
-                    User user = new User();
-                    user.setFullName(update.getMessage().getText());
                     citizensRegistration.setFullName(update.getMessage().getText());
                     getQuestion();
                     waitingType = WaitingType.SET_QUESTION;

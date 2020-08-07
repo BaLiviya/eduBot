@@ -44,6 +44,8 @@ public class CommandFactory {
                 return new id500_Map();
             case 501:
                 return new id501_ShowEvent();
+            case 600:
+                return new id600_CompletedAppeal();
 
         }
         return null;

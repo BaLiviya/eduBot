@@ -36,7 +36,7 @@ public class id015_NotCompletedTask extends Command {
                 deleteMessage(updateMessageId);
                 deleteMessage(deleteMessageId);
                 if (hasMessageText()) {
-                    taskArchiveDao.insert("<b>Не выполнено</b>:" + updateMessageText, task.getId());
+                    taskArchiveDao.insert("<b>Не выполнено</b>:" + updateMessageText, task.getId(), false);
                     closeTask();
                     return COMEBACK;
                 }

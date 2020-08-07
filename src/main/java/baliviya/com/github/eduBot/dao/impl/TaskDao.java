@@ -1,10 +1,13 @@
 package baliviya.com.github.eduBot.dao.impl;
 
 import baliviya.com.github.eduBot.dao.AbstractDao;
+import baliviya.com.github.eduBot.entity.custom.Category;
 import baliviya.com.github.eduBot.entity.custom.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskDao extends AbstractDao<Task> {
 
@@ -13,6 +16,10 @@ public class TaskDao extends AbstractDao<Task> {
         return (int) getDBUtils().updateForKeyId(sql, task.getStatusId(), task.getTaskText(), task.getDateBegin(), task.getPeopleId(), task.getPeopleName(), task.getMessageId(), task.getEmployeeId(), task.getCategoryId());
     }
 
+    public List<Task> getAllTasks(int idStatus, long employee_id){
+        sql = "SELECT * FROM TASK WHERE ID_STATUS = ? AND EMPLOYEE_ID = ?";
+        return getJdbcTemplate().query(sql,setParam(idStatus, employee_id),this::mapper);
+    }
     public Task get(int id){
         sql = "SELECT * FROM TASK WHERE ID = ?";
         return getJdbcTemplate().queryForObject(sql,setParam(id),this::mapper);
@@ -21,6 +28,11 @@ public class TaskDao extends AbstractDao<Task> {
     public void updateStatus(int taskId, int idStatus){
         sql = "UPDATE TASK SET ID_STATUS = ? WHERE ID = ?";
         getJdbcTemplate().update(sql, idStatus, taskId);
+    }
+
+    public List<Task> getAll(long employee_id){
+        sql = "SELECT * FROM TASK WHERE EMPLOYEE_ID = ?";
+        return getJdbcTemplate().query(sql, setParam(employee_id),this::mapper);
     }
 
 

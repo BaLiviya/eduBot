@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="eduBot02" uuid="0d71677e-516f-48d0-beb4-d7c5f5ad2aa0">
+    <data-source source="LOCAL" name="eduBot" uuid="7b0250a9-a060-4bc0-8064-e5d423ee48f4">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:~/eduBot02;AUTO_SERVER=TRUE</jdbc-url>
+      <jdbc-url>jdbc:h2:~/eduBot;AUTO_SERVER=TRUE</jdbc-url>
     </data-source>
   </component>
 </project>
