@@ -44,7 +44,7 @@ public abstract class Command {
     protected               Long                 chatId;
 //    protected               Long                 employeeChatId;
     protected               Message              updateMessage;
-    protected String                             updateMessageText;
+    protected               String               updateMessageText;
     protected               int                  updateMessageId;
     protected java.lang.String editableTextOfMessage;
     protected java.lang.String updateMessagePhoto;
