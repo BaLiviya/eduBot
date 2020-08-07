@@ -50,20 +50,19 @@ public class id601_NotCompletedAppeal extends Command {
                     }
 
                     String text = String.format(getText(Const.MESSAGE_COMPLETED),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),sb.toString(),taskArchive.getText());
-                    sendMessage(text);
-//                    sendMessageWithKeyboard(text,Const.BACK_BUTTON_IN_MENU);
-//                    if (isButton(Const.BACK_BUTTON)){
-//                        deleteMessage(updateMessageId);
-//                        tasks = factory.getTaskDao().getAllTasks(1,chatId);
-//                        list = new ArrayList<>();
-//                        tasks.forEach(e -> list.add(e.getPeopleName()));
-//                        buttonsLeaf = new ButtonsLeaf(list);
-//                        toDeleteKeyboard(sendMessageWithKeyboard(getText(Const.MESSAGE_CHOOSE_APPEAL), buttonsLeaf.getListButton()));
-//                        waitingType = WaitingType.CHOICE_APPEAL;
-//                        return COMEBACK;
-//                    }
+                    sendMessageWithKeyboard(text, Const.BACK_BUTTON_IN_MENU);
+                    waitingType = WaitingType.BACK_BUTTON_IN_MENU;
                 }
-                return EXIT;
+                return COMEBACK;
+            case BACK_BUTTON_IN_MENU:
+                deleteMessage(updateMessageId);
+                tasks = factory.getTaskDao().getAllTasks(2, chatId);
+                list = new ArrayList<>();
+                tasks.forEach(e -> list.add(e.getPeopleName()));
+                buttonsLeaf = new ButtonsLeaf(list);
+                toDeleteKeyboard(sendMessageWithKeyboard(getText(Const.MESSAGE_CHOOSE_APPEAL), buttonsLeaf.getListButton()));
+                waitingType = WaitingType.CHOICE_APPEAL;
+                return COMEBACK;
         }
         return EXIT;
 

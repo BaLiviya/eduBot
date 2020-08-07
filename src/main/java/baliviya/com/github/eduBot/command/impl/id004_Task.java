@@ -78,7 +78,7 @@ public class id004_Task extends Command {
     private void        sendMessageToEmployee(String name, int taskId, StringBuilder employeeName) {
         StringBuilder messageToEmployee = new StringBuilder();
         ReplyKeyboard select;
-        select = keyboardMarkUpDao.select(7);
+        select = keyboardMarkUpDao.select(Const.KEYBOARD_SEND_MESSAGE_TO_EMPLOYEE);
 //        messageToEmployee.append(getLinkT("Обращение # " + taskId)).append(next);
         messageToEmployee.append("<b>Обращение # </b>" + taskId).append(next);
         messageToEmployee.append("<b>Заявитель : </b>").append(name).append(next);
@@ -108,7 +108,6 @@ public class id004_Task extends Command {
                 sendMessageWithKeyboard(messageToEmployee.toString(),select, directId);
             } catch (TelegramApiException e) { e.printStackTrace(); }
         }
-//        ReplyKeyboard select;
     }
 
     private void    sendMessageToUser(int taskId, StringBuilder employeeName)     throws TelegramApiException {

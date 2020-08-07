@@ -1,5 +1,7 @@
 package baliviya.com.github.eduBot.util;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 public class Const {
 
     public static final String SPLIT                                = ";";
@@ -32,7 +34,11 @@ public class Const {
     public static final int EVENT_INFORMATION_MESSAGE               = 1014;
     public static final int JOIN_EVENT_KEYBOARD                     = 1002;
 
+    public static final int MESSAGE_IN_PROCESS                      = 527;
     public static final int MESSAGE_COMPLETED                       = 526;
     public static final int MESSAGE_CHOOSE_APPEAL                   = 525;
     public static final int BACK_BUTTON_IN_MENU                     = 505;
+
+    public static final int KEYBOARD_SEND_MESSAGE_TO_EMPLOYEE       = 7;
+    public static final int KEYBOARD_SEND_MESSAGE_TO_EMPLOYEE_IN_MENU = 506;
 }

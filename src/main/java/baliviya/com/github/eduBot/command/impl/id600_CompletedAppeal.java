@@ -46,7 +46,6 @@ public class id600_CompletedAppeal extends Command {
                     }
 
                     String text = String.format(getText(Const.MESSAGE_COMPLETED),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),sb.toString(),taskArchive.getText());
-//                    sendMessage(text);
                     sendMessageWithKeyboard(text,Const.BACK_BUTTON_IN_MENU);
                     waitingType = WaitingType.BACK_BUTTON_IN_MENU;
 
