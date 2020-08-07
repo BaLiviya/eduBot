@@ -10,8 +10,15 @@ import java.util.List;
 public class EmployeeCategoryDao extends AbstractDao<EmployeeCategory> {
 
     public List<EmployeeCategory> getByCategoryId(int categoryId) {
-        sql = "SELECT * FROM EMPLOYEE_CATEGORY WHERE CATEGORY_ID = ?";
+        sql         = "SELECT * FROM EMPLOYEE_CATEGORY WHERE CATEGORY_ID = ?";
         return getJdbcTemplate().query(sql, setParam(categoryId), this::mapper);
+    }
+
+    public boolean       isEmployee(long employeeChatId){
+        sql         = "SELECT count(*) FROM EMPLOYEE_CATEGORY WHERE EMPLOYEE_CHAT_ID = ?";
+        int count   =getJdbcTemplate().queryForObject(sql, setParam(employeeChatId), Integer.class);
+        if(count > 0) return true;
+        return false;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class id015_NotCompletedTask extends Command {
     }
 
     private void closeTask() throws TelegramApiException {
-        factory.getTaskDao().updateStatus(task.getId(),1);
+        factory.getTaskDao().updateStatus(task.getId(),2);
         task                            = factory.getTaskDao().get(task.getId());
         List<TaskArchive> taskArchive   = taskArchiveDao.getTasksArchive(task.getId());
         String employeeName             = "";

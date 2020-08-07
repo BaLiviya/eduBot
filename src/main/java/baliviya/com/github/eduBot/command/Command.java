@@ -42,6 +42,7 @@ public abstract class Command {
     protected               Update               update;
     protected               DefaultAbsSender     bot;
     protected               Long                 chatId;
+//    protected               Long                 employeeChatId;
     protected               Message              updateMessage;
     protected String                             updateMessageText;
     protected               int                  updateMessageId;
@@ -70,6 +71,7 @@ public abstract class Command {
     protected static QuestDao               questDao                = factory.getQuestDao();
     protected static SurveyDao               surveyDao              = factory.getSurveyDao();
     protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
+
 
     public abstract boolean execute()                                                           throws TelegramApiException, IOException, SQLException;
 
@@ -220,6 +222,10 @@ public abstract class Command {
     //protected boolean       isAdmin() {
 //        return adminDao.isAdmin(chatId);
     //}
+
+    protected boolean       isEmployee() {
+        return employeeCategoryDao.isEmployee(chatId);
+    }
 
     protected boolean       hasContact() {
         return update.hasMessage() && update.getMessage().getContact() != null;
