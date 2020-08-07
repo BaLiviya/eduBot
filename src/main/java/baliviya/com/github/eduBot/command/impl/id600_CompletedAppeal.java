@@ -5,6 +5,7 @@ import baliviya.com.github.eduBot.entity.custom.Task;
 import baliviya.com.github.eduBot.entity.custom.TaskArchive;
 import baliviya.com.github.eduBot.entity.enums.WaitingType;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
+import baliviya.com.github.eduBot.util.Const;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
@@ -28,22 +29,17 @@ public class id600_CompletedAppeal extends Command {
                 tasks = factory.getTaskDao().getAllTasks(1,chatId);
 //                completed_tasks = factory.getTaskArchiveDao().getAllCompletedTasksArchive();
                 list = new ArrayList<>();
-                tasks.forEach(e -> list.add(String.valueOf(e.getId())));
+                tasks.forEach(e -> list.add(e.getPeopleName()));
                 buttonsLeaf = new ButtonsLeaf(list);
-                toDeleteKeyboard(sendMessageWithKeyboard(getText(525), buttonsLeaf.getListButton()));
+                toDeleteKeyboard(sendMessageWithKeyboard(getText(Const.MESSAGE_CHOOSE_APPEAL), buttonsLeaf.getListButton()));
                 waitingType = WaitingType.CHOICE_APPEAL;
                 return COMEBACK;
             case CHOICE_APPEAL:
                 deleteMessage(updateMessageId);
                 if (hasCallbackQuery()){
                     task = tasks.get(Integer.parseInt(updateMessageText));
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(task.getId()).append(next);
-                    sb.append(task.getTaskText()).append(next);
-                    sb.append(task.getPeopleName()).append(next);
-                    sb.append(task.getDateBegin()).append(next);
-                    sb.append(userDao.getUserByChatId(task.getEmployeeId()).getFullName()).append(next);
-                    sendMessage(sb.toString());
+                    String text = String.format(getText(Const.MESSAGE_COMPLETED),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),userDao.getUserByChatId(task.getEmployeeId()).getFullName());
+                    sendMessage(text);
                 }
                 return EXIT;
         }

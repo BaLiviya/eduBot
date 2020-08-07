@@ -31,4 +31,7 @@ public class Const {
     public static final int BACK_BUTTON                             = 1004;
     public static final int EVENT_INFORMATION_MESSAGE               = 1014;
     public static final int JOIN_EVENT_KEYBOARD                     = 1002;
+
+    public static final int MESSAGE_COMPLETED                       = 526;
+    public static final int MESSAGE_CHOOSE_APPEAL                   = 525;
 }
