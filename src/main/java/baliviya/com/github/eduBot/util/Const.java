@@ -34,4 +34,5 @@ public class Const {
 
     public static final int MESSAGE_COMPLETED                       = 526;
     public static final int MESSAGE_CHOOSE_APPEAL                   = 525;
+    public static final int BACK_BUTTON_IN_MENU                     = 505;
 }

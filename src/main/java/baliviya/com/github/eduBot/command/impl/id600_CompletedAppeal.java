@@ -1,6 +1,7 @@
 package baliviya.com.github.eduBot.command.impl;
 
 import baliviya.com.github.eduBot.command.Command;
+import baliviya.com.github.eduBot.entity.custom.EmployeeCategory;
 import baliviya.com.github.eduBot.entity.custom.Task;
 import baliviya.com.github.eduBot.entity.custom.TaskArchive;
 import baliviya.com.github.eduBot.entity.enums.WaitingType;
@@ -15,7 +16,6 @@ import java.util.List;
 
 public class id600_CompletedAppeal extends Command {
 
-    private List<TaskArchive> completed_tasks;
     private List<String> list;
     private ButtonsLeaf buttonsLeaf;
     private TaskArchive taskArchive;
@@ -27,7 +27,6 @@ public class id600_CompletedAppeal extends Command {
         switch (waitingType){
             case START:
                 tasks = factory.getTaskDao().getAllTasks(1,chatId);
-//                completed_tasks = factory.getTaskArchiveDao().getAllCompletedTasksArchive();
                 list = new ArrayList<>();
                 tasks.forEach(e -> list.add(e.getPeopleName()));
                 buttonsLeaf = new ButtonsLeaf(list);
@@ -38,8 +37,27 @@ public class id600_CompletedAppeal extends Command {
                 deleteMessage(updateMessageId);
                 if (hasCallbackQuery()){
                     task = tasks.get(Integer.parseInt(updateMessageText));
-                    String text = String.format(getText(Const.MESSAGE_COMPLETED),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),userDao.getUserByChatId(task.getEmployeeId()).getFullName());
+                    taskArchive = factory.getTaskArchiveDao().getTaskArchive(task.getId());
+
+
+                    StringBuilder sb = new StringBuilder();
+                    for (EmployeeCategory employeeCategory : factory.getEmployeeCategoryDao().getByCategoryId(task.getCategoryId())){
+                        sb.append(userDao.getUserByChatId(employeeCategory.getEmployeeChatId()).getFullName()).append(", ");
+                    }
+
+                    String text = String.format(getText(Const.MESSAGE_COMPLETED),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),sb.toString(),taskArchive.getText());
                     sendMessage(text);
+//                    sendMessageWithKeyboard(text,Const.BACK_BUTTON_IN_MENU);
+//                    if (isButton(Const.BACK_BUTTON)){
+//                        deleteMessage(updateMessageId);
+//                        tasks = factory.getTaskDao().getAllTasks(1,chatId);
+//                        list = new ArrayList<>();
+//                        tasks.forEach(e -> list.add(e.getPeopleName()));
+//                        buttonsLeaf = new ButtonsLeaf(list);
+//                        toDeleteKeyboard(sendMessageWithKeyboard(getText(Const.MESSAGE_CHOOSE_APPEAL), buttonsLeaf.getListButton()));
+//                        waitingType = WaitingType.CHOICE_APPEAL;
+//                        return COMEBACK;
+//                    }
                 }
                 return EXIT;
         }

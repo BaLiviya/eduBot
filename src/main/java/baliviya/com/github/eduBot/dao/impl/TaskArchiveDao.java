@@ -30,10 +30,10 @@ public class TaskArchiveDao extends AbstractDao<TaskArchive> {
 //        return getJdbcTemplate().query(sql, this::mapper);
 //    }
 
-    public TaskArchive getTaskArchive(int id) {
+    public TaskArchive getTaskArchive(int task_id) {
         sql = "SELECT * FROM TASK_ARCHIVE WHERE TASK_ID = ?";
         try {
-            return getJdbcTemplate().queryForObject(sql, setParam(id), this::mapper);
+            return getJdbcTemplate().queryForObject(sql, setParam(task_id), this::mapper);
         } catch (Exception e) {
             if (e.getMessage().contains("Incorrect result size: expected 1, actual 0")) return null;
             return null;
