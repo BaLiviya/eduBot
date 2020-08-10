@@ -19,17 +19,18 @@ private boolean isUpdate;
 
     @Override
     public boolean execute() throws TelegramApiException, IOException {
-        /*if(!isAdmin()){
+        if(!isAdmin()){
             sendMessage(Const.NO_ACCESS);
             return EXIT;
-        }*/
+        }
         switch (waitingType){
             case START:
                 deleteMessage(updateMessageId);
                 sendListQuestion();
-                waitingType = WaitingType.CHOICE_CATEGORY;
+                waitingType = WaitingType.CHOICE_OPTION;
                 return COMEBACK;
-            case CHOICE_OPTION:
+
+                case CHOICE_OPTION:
                 deleteMessage(updateMessageId);
                 deleteMessage(deleteMessageId);
                 if(hasMessageText()){
@@ -70,10 +71,10 @@ private boolean isUpdate;
     }
 
     private void sendListQuestion() throws TelegramApiException{
-        String formatMessage = getText(0);
+        String formatMessage = getText(17);
         StringBuilder stringBuilder = new StringBuilder();
         questsList = questDao.getAll();
-        String format = getText(0);
+        String format = getText(18);
         for (int indexQuest = 0; indexQuest < questsList.size(); indexQuest++) {
             Quest quest = questsList.get(indexQuest);
             stringBuilder.append(String.format(format, "/del" + indexQuest,

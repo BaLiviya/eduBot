@@ -1,7 +1,5 @@
 package baliviya.com.github.eduBot.util;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 public class Const {
 
     public static final String SPLIT                                = ";";
@@ -33,8 +31,15 @@ public class Const {
     public static final int BACK_BUTTON                             = 1004;
     public static final int EVENT_INFORMATION_MESSAGE               = 1014;
     public static final int JOIN_EVENT_KEYBOARD                     = 1002;
+    public static final int ICON_CROSS                              = 1015;
+    public static final int ICON_LOUPE                              = 1016;
+    public static final int DELETE_BUTTON_SLASH                     = 1017;
+    public static final int USER_DO_NOT_REGISTERED                  = 1018;
+    public static final int USER_IS_ADMIN                           = 1019;
+    public static final int ADMIN_SHOW_LIST                         = 1020;
+    public static final int WARNING_INFO_ABOUT_ADMIN                = 1021;
 
-    public static final int MESSAGE_IN_PROCESS                      = 527;
+//    public static final int MESSAGE_IN_PROCESS                      = 527;
     public static final int MESSAGE_COMPLETED                       = 526;
     public static final int MESSAGE_CHOOSE_APPEAL                   = 525;
     public static final int BACK_BUTTON_IN_MENU                     = 505;

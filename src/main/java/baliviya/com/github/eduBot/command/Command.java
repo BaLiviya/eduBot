@@ -67,7 +67,7 @@ public abstract class Command {
     protected static CategoryDao            categoryDao             = factory.getCategoryDao();
     protected static EmployeeCategoryDao    employeeCategoryDao     = factory.getEmployeeCategoryDao();
     protected static TaskDao                taskDao                 = factory.getTaskDao();
-//    protected static AdminDao               adminDao                = factory.getAdminDao();
+    protected static AdminDao               adminDao                = factory.getAdminDao();
     protected static QuestDao               questDao                = factory.getQuestDao();
     protected static SurveyDao               surveyDao              = factory.getSurveyDao();
     protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
@@ -219,9 +219,9 @@ public abstract class Command {
         return COMEBACK;
     }
 
-    //protected boolean       isAdmin() {
-//        return adminDao.isAdmin(chatId);
-    //}
+    protected boolean       isAdmin() {
+        return adminDao.isAdmin(chatId);
+    }
 
     protected boolean       isEmployee() {
         return employeeCategoryDao.isEmployee(chatId);

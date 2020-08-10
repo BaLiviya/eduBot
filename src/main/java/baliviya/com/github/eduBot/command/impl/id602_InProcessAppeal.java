@@ -42,17 +42,30 @@ public class id602_InProcessAppeal extends Command {
             deleteMessage(updateMessageId);
             if (hasCallbackQuery()){
                 task = tasks.get(Integer.parseInt(updateMessageText));
+                taskArchive = factory.getTaskArchiveDao().getTaskArchive(task.getId());
+
 
                 StringBuilder sb = new StringBuilder();
                 for (EmployeeCategory employeeCategory : factory.getEmployeeCategoryDao().getByCategoryId(task.getCategoryId())){
                     sb.append(userDao.getUserByChatId(employeeCategory.getEmployeeChatId()).getFullName()).append(", ");
                 }
 
-                sendMessageToEmployee(task.getPeopleName(),task.getId(),sb);
+
+//                String text = String.format(getText(Const.MESSAGE_IN_PROCESS),task.getId(),task.getTaskText(),task.getPeopleName(),task.getDateBegin(),sb.toString());
+//                sendMessageWithKeyboard(text, Const.BACK_BUTTON_IN_MENU);
+                sendMessageToEmployee(task.getPeopleName(), task.getId(), sb);
                 waitingType = WaitingType.BACK_BUTTON_IN_MENU;
+
             }
+
             return COMEBACK;
             case BACK_BUTTON_IN_MENU:
+                /*if(isButton(20)){
+                    sendMessageWithKeyboard(getText(Const.MESSAGE_IN_PROCESS),buttonsLeaf.getListButton());
+                }
+                if(isButton(21)){
+                    sendMessageWithKeyboard(getText(Const.MESSAGE_IN_PROCESS),buttonsLeaf.getListButton());
+                }*/
                 deleteMessage(updateMessageId);
                 tasks = factory.getTaskDao().getAllTasks(3, chatId);
                 list = new ArrayList<>();

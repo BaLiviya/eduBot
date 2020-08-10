@@ -35,7 +35,7 @@ public class QuestDao extends AbstractDao<Quest> {
     }
 
     public void update(Quest quest) {
-        sql = "UPDATE SURVEY_QUEST  SET_NAME = ? WHERE ID = ?";
+        sql = "UPDATE SURVEY_QUEST  SET NAME = ? WHERE ID = ?";
         getJdbcTemplate().update(sql, quest.getName(), quest.getId());
     }
 

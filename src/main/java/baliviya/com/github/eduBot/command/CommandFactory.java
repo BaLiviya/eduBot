@@ -40,6 +40,8 @@ public class CommandFactory {
                 return new id015_NotCompletedTask();
             case 16:
                 return new id016_ShowEmployeeMenu();
+            case 17:
+                return new id017_EditAdmin();
             case 500:
                 return new id500_Map();
             case 501:

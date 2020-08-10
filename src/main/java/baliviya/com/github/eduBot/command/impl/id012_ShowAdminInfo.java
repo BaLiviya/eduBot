@@ -13,10 +13,10 @@ import java.io.IOException;
 public class id012_ShowAdminInfo extends Command {
     @Override
     public boolean execute() throws TelegramApiException, IOException {
-        /*if(!isAdmin()){
+        if(!isAdmin()){
             sendMessage(Const.NO_ACCESS);
             return EXIT;
-        }*/
+        }
         deleteMessage(updateMessageId);
         Message message = messageDao.getMessage(messageId);
         sendMessage(messageId, chatId, null, message.getPhoto());

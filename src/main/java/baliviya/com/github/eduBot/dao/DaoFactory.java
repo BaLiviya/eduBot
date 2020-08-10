@@ -66,5 +66,5 @@ public class DaoFactory {
 
     public TaskArchiveDao                       getTaskArchiveDao()              {return new TaskArchiveDao();}
 
-//    public AdminDao                             getAdminDao()                  { return new AdminDao(); }
+    public AdminDao                             getAdminDao()                  { return new AdminDao(); }
 }
