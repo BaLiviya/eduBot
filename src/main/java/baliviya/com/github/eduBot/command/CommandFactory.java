@@ -52,6 +52,10 @@ public class CommandFactory {
                 return new id601_NotCompletedAppeal();
             case 602:
                 return new id602_InProcessAppeal();
+            case 603:
+                return new id603_EditEvent();
+            case 604:
+                return new id604_EditMenu();
 
         }
         return null;

@@ -71,6 +71,7 @@ public abstract class Command {
     protected static QuestDao               questDao                = factory.getQuestDao();
     protected static SurveyDao               surveyDao              = factory.getSurveyDao();
     protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
+    protected static EventDao               eventDao                = factory.getEventDao();
 
 
     public abstract boolean execute()                                                           throws TelegramApiException, IOException, SQLException;
