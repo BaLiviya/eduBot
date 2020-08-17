@@ -10,7 +10,7 @@ import java.util.List;
 public class SurveyDao extends AbstractDao<Survey> {
 
     public void insert(Survey survey){
-        sql = "INSERT INTO SURVEY_ANSWER(CHAT_ID , FIRST , DATE_ANSWER) VALUES (?, ?, ?)";
+        sql = "INSERT INTO SURVEY_ANSWER(CHAT_ID , ANSWERS , DATE_ANSWER) VALUES (?, ?, ?)";
         getJdbcTemplate().update(sql, survey.getChatId(), survey.getAnswers(), survey.getDateAnswer());
     }
 

@@ -2,12 +2,16 @@ package baliviya.com.github.eduBot.dao.impl;
 
 import baliviya.com.github.eduBot.dao.AbstractDao;
 import baliviya.com.github.eduBot.entity.custom.Quest;
+import baliviya.com.github.eduBot.entity.enums.Language;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class QuestDao extends AbstractDao<Quest> {
+
+
 
     public List<Quest> getAll(){
         sql = "SELECT * FROM SURVEY_QUEST";

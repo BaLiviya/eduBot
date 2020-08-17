@@ -42,6 +42,8 @@ public class CommandFactory {
                 return new id016_ShowEmployeeMenu();
             case 17:
                 return new id017_EditAdmin();
+            case 18:
+                return new id018_ShowStaffInfo();
             case 500:
                 return new id500_Map();
             case 501:

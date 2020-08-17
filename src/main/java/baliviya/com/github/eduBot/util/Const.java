@@ -91,4 +91,10 @@ public class Const {
     public static final int EVENT_KEYBOARD                          = 507;
     public static final int KEYBOARD_EDIT_BUTTON_ID                 = 508;
     public static final int JOIN_EVENT_KEYBOARD                     = 1002;
+
+    public static final int STAFF_INFORMATION                       = 19;
+    public static final int STRUCTURE_OF_UO                         = 20;
+    public static final int DEPARTMENTS_OF_UO                       = 21;
+    public static final int STAFF_INFORMATION02                     = 22;
+    public static final int DEPARTMENT_TITLE                        = 23;
 }

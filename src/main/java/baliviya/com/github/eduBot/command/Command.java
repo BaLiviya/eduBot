@@ -46,10 +46,10 @@ public abstract class Command {
     protected               Message              updateMessage;
     protected               String               updateMessageText;
     protected               int                  updateMessageId;
-    protected java.lang.String editableTextOfMessage;
-    protected java.lang.String updateMessagePhoto;
-    protected java.lang.String updateMessagePhone;
-    protected String markChange;
+    protected               String               editableTextOfMessage;
+    protected               String               updateMessagePhoto;
+    protected               String               updateMessagePhone;
+    protected               String               markChange;
     protected               int                  lastSendMessageID;
     protected final static  boolean              EXIT                        = true;
     protected final static  boolean              COMEBACK                    = false;
@@ -69,9 +69,12 @@ public abstract class Command {
     protected static TaskDao                taskDao                 = factory.getTaskDao();
     protected static AdminDao               adminDao                = factory.getAdminDao();
     protected static QuestDao               questDao                = factory.getQuestDao();
-    protected static SurveyDao               surveyDao              = factory.getSurveyDao();
+    protected static SurveyDao              surveyDao               = factory.getSurveyDao();
     protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
     protected static EventDao               eventDao                = factory.getEventDao();
+    protected static PositionDao            positionDao             = factory.getPositionDao();
+    protected static StaffDao               staffDao                = factory.getStaffDao();
+    protected static DepartmentDao          departmentDao           = factory.getDepartmentDao();
 
 
     public abstract boolean execute()                                                           throws TelegramApiException, IOException, SQLException;
@@ -189,7 +192,7 @@ public abstract class Command {
         return String.format("<a href = \"tg://user?id=%s\">%s</a>", chatId, userName);
     }
 
-    protected String        getText(int messageIdFromDb) {
+     protected String        getText(int messageIdFromDb) {
         return messageDao.getMessageText(messageIdFromDb);
     }
 

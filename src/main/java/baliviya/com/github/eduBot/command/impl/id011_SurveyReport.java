@@ -8,7 +8,9 @@ import baliviya.com.github.eduBot.util.components.DateKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
+
 
 public class id011_SurveyReport extends Command {
 
@@ -19,10 +21,10 @@ public class id011_SurveyReport extends Command {
 
     @Override
     public boolean execute() throws TelegramApiException, IOException {
-       /* if(!isAdmin()){
+        if(!isAdmin()){
             sendMessage(Const.NO_ACCESS);
             return EXIT;
-        }*/
+        }
         switch (waitingType){
             case START:
                 deleteMessage(updateMessageId);
@@ -73,3 +75,7 @@ public class id011_SurveyReport extends Command {
         barChart.getChart();
     }
 }
+
+
+
+
