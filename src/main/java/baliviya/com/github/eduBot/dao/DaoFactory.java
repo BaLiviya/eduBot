@@ -3,7 +3,6 @@ package baliviya.com.github.eduBot.dao;
 import baliviya.com.github.eduBot.dao.impl.*;
 import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
 import baliviya.com.github.eduBot.entity.custom.Quest;
-import baliviya.com.github.eduBot.entity.standart.Staff;
 import baliviya.com.github.eduBot.util.PropertiesUtil;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -31,41 +30,41 @@ public class DaoFactory {
     }
 
 
-    public PropertiesDao                        getPropertiesDao()              { return new PropertiesDao(); }
+    public PropertiesDao                        getPropertiesDao() {        return new PropertiesDao(); }
 
-    public MessageDao                           getMessageDao()                 { return new MessageDao(); }
+    public MessageDao                           getMessageDao() {           return new MessageDao(); }
 
-    public ButtonDao                            getButtonDao()                  { return new ButtonDao();}
+    public ButtonDao                            getButtonDao() {            return new ButtonDao();}
 
-    public KeyboardMarkUpDao                    getKeyboardMarkUpDao()          { return new KeyboardMarkUpDao(); }
+    public KeyboardMarkUpDao                    getKeyboardMarkUpDao() {    return new KeyboardMarkUpDao(); }
 
-    public LanguageUserDao                      getLanguageUserDao()            { return new LanguageUserDao(); }
+    public LanguageUserDao                      getLanguageUserDao() {      return new LanguageUserDao(); }
 
-    public UserDao                              getUserDao()                    { return new UserDao(); }
+    public UserDao                              getUserDao() {              return new UserDao(); }
 
-    public CategoryDao                          getCategoryDao()                { return  new CategoryDao(); }
+    public CategoryDao                          getCategoryDao() {          return  new CategoryDao(); }
 
-    public EmployeeCategoryDao                  getEmployeeCategoryDao()        { return new EmployeeCategoryDao(); }
+    public EmployeeCategoryDao                  getEmployeeCategoryDao() {  return new EmployeeCategoryDao(); }
 
-    public TaskDao                              getTaskDao()                    { return new TaskDao(); }
+    public TaskDao                              getTaskDao() {              return new TaskDao(); }
 
-    public CitizensInfoDao                      getCitizensInfoDao()            { return new CitizensInfoDao(); }
+    public CitizensInfoDao                      getCitizensInfoDao() {      return new CitizensInfoDao();}
 
-    public ReceptionDao                         getReceptionDao()               { return new ReceptionDao(); }
+    public ReceptionDao                         getReceptionDao() {         return new ReceptionDao(); }
 
-    public CitizensRegistrationDao              getCitizensRegistrationDao()    { return new CitizensRegistrationDao(); }
+    public CitizensRegistrationDao              getCitizensRegistrationDao(){return new CitizensRegistrationDao();    }
 
-    public MapDao                               getMapDao()                     { return new MapDao(); }
+    public MapDao                               getMapDao() {               return new MapDao(); }
 
-    public EventDao                             getEventDao()                   { return new EventDao(); }
+    public EventDao                             getEventDao() {             return new EventDao();}
 
-    public RegistrationEventDao                 getRegistrationEventDao()       { return new RegistrationEventDao(); }
+    public RegistrationEventDao                 getRegistrationEventDao() { return new RegistrationEventDao();}
 
-    public QuestDao                             getQuestDao()                   { return new QuestDao(); }
+    public QuestDao                             getQuestDao()                  { return new QuestDao(); }
 
-    public SurveyDao                            getSurveyDao()                  { return new SurveyDao(); }
+    public SurveyDao                            getSurveyDao()                 { return new SurveyDao(); }
 
-    public TaskArchiveDao                       getTaskArchiveDao()             { return new TaskArchiveDao(); }
+    public TaskArchiveDao                       getTaskArchiveDao()              {return new TaskArchiveDao();}
 
     public AdminDao                             getAdminDao()                   { return new AdminDao(); }
 
@@ -74,4 +73,10 @@ public class DaoFactory {
     public StaffDao                             getStaffDao()                   { return new StaffDao(); }
 
     public DepartmentDao                        getDepartmentDao()              { return new DepartmentDao(); }
+    
+    public DocumentDao                          getDocumentDao()                {return new DocumentDao();}
+    
+    public CitizensButtonsDao                   getCitizensButtonDao()          {return new CitizensButtonsDao();}
+    
+    public TempMessageDao                       getTempMessageDao()             {return new TempMessageDao(); }
 }

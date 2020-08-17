@@ -1,14 +1,11 @@
 package baliviya.com.github.eduBot.command.impl;
 
 import baliviya.com.github.eduBot.command.Command;
-import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
 import baliviya.com.github.eduBot.entity.custom.CitizensRegistration;
 import baliviya.com.github.eduBot.entity.custom.Reception;
 import baliviya.com.github.eduBot.entity.enums.WaitingType;
-import baliviya.com.github.eduBot.entity.standart.User;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
 import baliviya.com.github.eduBot.util.Const;
-import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
@@ -73,10 +70,10 @@ public class id005_Citizens extends Command {
 
             case WAIT:
                 deleteMessage(updateMessageId);
-                if (isButton(524)) {
+                if (isButton(524)) { // КНОПКА ЗАПИСАТЬСЯ
                     citizensRegistration.setDate(new Date());
                     factory.getCitizensRegistrationDao().insert(citizensRegistration);
-                    sendMessage(String.format(getText(524),userDao.getUserByChatId(chatId).getFullName(),reception.getName()));
+                    sendMessage(String.format(getText(524),userDao.getUserByChatId(chatId).getFullName(),reception.getName())); // Уважаемый вы записаны на ...
                     return EXIT;
                 }
             return COMEBACK;

@@ -17,10 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideo;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Contact;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
@@ -46,10 +43,11 @@ public abstract class Command {
     protected               Message              updateMessage;
     protected               String               updateMessageText;
     protected               int                  updateMessageId;
-    protected               String               editableTextOfMessage;
-    protected               String               updateMessagePhoto;
-    protected               String               updateMessagePhone;
-    protected               String               markChange;
+    protected java.lang.String editableTextOfMessage;
+    protected java.lang.String updateMessagePhoto;
+    protected java.lang.String updateMessagePhone;
+    protected Document updateMessageDocument;
+    protected String markChange;
     protected               int                  lastSendMessageID;
     protected final static  boolean              EXIT                        = true;
     protected final static  boolean              COMEBACK                    = false;
@@ -72,6 +70,9 @@ public abstract class Command {
     protected static SurveyDao              surveyDao               = factory.getSurveyDao();
     protected static TaskArchiveDao         taskArchiveDao          = factory.getTaskArchiveDao();
     protected static EventDao               eventDao                = factory.getEventDao();
+    protected static DocumentDao            documentDao             = factory.getDocumentDao();
+    protected static CitizensButtonsDao     citizensButtonsDao      = factory.getCitizensButtonDao();
+    protected static TempMessageDao         tempMessageDao          = factory.getTempMessageDao();
     protected static PositionDao            positionDao             = factory.getPositionDao();
     protected static StaffDao               staffDao                = factory.getStaffDao();
     protected static DepartmentDao          departmentDao           = factory.getDepartmentDao();
@@ -192,7 +193,7 @@ public abstract class Command {
         return String.format("<a href = \"tg://user?id=%s\">%s</a>", chatId, userName);
     }
 
-     protected String        getText(int messageIdFromDb) {
+    protected String        getText(int messageIdFromDb) {
         return messageDao.getMessageText(messageIdFromDb);
     }
 
@@ -216,6 +217,9 @@ public abstract class Command {
                 updateMessagePhoto  = update.getMessage().getPhoto().get(size - 1).getFileId();
             } else {
                 updateMessagePhoto  = null;
+            }
+            if (updateMessage.hasDocument()) {
+                updateMessageDocument = updateMessage.getDocument();
             }
         }
         if (hasContact()) updateMessagePhone = update.getMessage().getContact().getPhoneNumber();

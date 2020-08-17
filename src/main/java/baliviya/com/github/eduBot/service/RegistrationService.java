@@ -20,7 +20,7 @@ public class RegistrationService {
     private BotUtil         botUtil;
     private List<String>    list;
     private ButtonsLeaf     buttonsLeaf;
-    private WaitingType     waitingType = WaitingType.START;
+    private WaitingType     waitingType = WaitingType.CHOOSE_BUTTON;
     private DaoFactory      factory     = DaoFactory.getInstance();
     private MessageDao      messageDao  = factory.getMessageDao();
     private boolean         COMEBACK    = false;
@@ -32,7 +32,7 @@ public class RegistrationService {
             this.botUtil = botUtil;
         }
         switch (waitingType) {
-            case START:
+            case CHOOSE_BUTTON:
                 user        = new User();
                 user.setChatId(chatId);
                 getName();

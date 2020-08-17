@@ -8,7 +8,6 @@ import baliviya.com.github.eduBot.entity.enums.WaitingType;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
 import baliviya.com.github.eduBot.util.Const;
 import baliviya.com.github.eduBot.util.DateUtil;
-import baliviya.com.github.eduBot.util.components.IKeyboardOld;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 

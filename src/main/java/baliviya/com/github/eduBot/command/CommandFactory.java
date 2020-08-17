@@ -48,6 +48,10 @@ public class CommandFactory {
                 return new id500_Map();
             case 501:
                 return new id501_ShowEvent();
+            case 502:
+                return new id502_UploadFileToHelpLine();
+            case 503:
+                return new id503_GetFileForHelpLine();
             case 600:
                 return new id600_CompletedAppeal();
             case 601:
@@ -58,6 +62,8 @@ public class CommandFactory {
                 return new id603_EditEvent();
             case 604:
                 return new id604_EditMenu();
+            case 20000:
+                return new TestSendFile();
 
         }
         return null;

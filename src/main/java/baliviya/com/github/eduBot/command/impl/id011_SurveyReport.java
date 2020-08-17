@@ -8,7 +8,6 @@ import baliviya.com.github.eduBot.util.components.DateKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 
 

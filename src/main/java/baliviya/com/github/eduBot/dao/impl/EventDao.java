@@ -28,6 +28,11 @@ public class EventDao extends AbstractDao<Event> {
         sql = "UPDATE EVENT SET IS_HIDE = ? WHERE ID = ?";
         getJdbcTemplate().update(sql, event.isHide(), event.getId());
     }
+    
+    public void insert(Event event) {
+        sql = "INSERT INTO EVENT(NAME,PHOTO,TEXT,IS_HIDE) VALUES(?,?,?,?)";
+        getJdbcTemplate().update(sql, event.getName(), event.getPhoto(), event.getText(),event.isHide());
+    }
 
     @Override
     protected Event mapper(ResultSet rs, int index) throws SQLException {
@@ -38,10 +43,5 @@ public class EventDao extends AbstractDao<Event> {
         event.setText(rs.getString(4));
         event.setHide(rs.getBoolean(5));
         return event;
-    }
-
-    public void insert(Event event) {
-        sql = "INSERT INTO EVENT(NAME,PHOTO,TEXT,IS_HIDE) VALUES(?,?,?,?)";
-        getJdbcTemplate().update(sql, event.getName(), event.getPhoto(), event.getText(),event.isHide());
     }
 }

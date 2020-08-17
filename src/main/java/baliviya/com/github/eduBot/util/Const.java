@@ -70,6 +70,8 @@ public class Const {
     public static final int MESSAGE_IN_PROCESS                      = 527;
     public static final int MESSAGE_COMPLETED                       = 526;
     public static final int MESSAGE_CHOOSE_APPEAL                   = 525;
+    public static final int ATTACH_A_PDF_FILE_TEXT                  = 600;
+    public static final int FILES_MESSAGE                           = 601;
     
     
     public static final int JOIN_EVENT_BUTTON                       = 1003;

@@ -7,7 +7,6 @@ import baliviya.com.github.eduBot.entity.enums.WaitingType;
 import baliviya.com.github.eduBot.entity.standart.Button;
 import baliviya.com.github.eduBot.entity.standart.Message;
 import baliviya.com.github.eduBot.service.LanguageService;
-import baliviya.com.github.eduBot.util.BotUtil;
 import baliviya.com.github.eduBot.util.ButtonUtil;
 import baliviya.com.github.eduBot.util.Const;
 import baliviya.com.github.eduBot.util.ParserMessageEntity;
