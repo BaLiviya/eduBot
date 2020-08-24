@@ -52,6 +52,10 @@ public class CommandFactory {
                 return new id502_UploadFileToHelpLine();
             case 503:
                 return new id503_GetFileForHelpLine();
+            case 504:
+                return new id504_Reminder();
+            case 505:
+                return new id505_TaskReport();
             case 600:
                 return new id600_CompletedAppeal();
             case 601:

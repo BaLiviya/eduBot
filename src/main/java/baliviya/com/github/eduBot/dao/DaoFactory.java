@@ -79,4 +79,6 @@ public class DaoFactory {
     public CitizensButtonsDao                   getCitizensButtonDao()          {return new CitizensButtonsDao();}
     
     public TempMessageDao                       getTempMessageDao()             {return new TempMessageDao(); }
+    
+    public ReminderTaskDao                      getReminderTaskDao()            {return new ReminderTaskDao();}
 }

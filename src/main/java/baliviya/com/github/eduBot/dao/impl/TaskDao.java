@@ -7,9 +7,15 @@ import baliviya.com.github.eduBot.entity.custom.Task;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TaskDao extends AbstractDao<Task> {
+    
+    public List<Task> getTasksByTime(Date dateBegin, Date deadline, int categoryId){
+        sql = "SELECT * FROM TASK WHERE DATE_BEGIN BETWEEN ? AND ? AND CATEGORY_ID = ? ORDER BY ID";
+        return getJdbcTemplate().query(sql, setParam(dateBegin, deadline, categoryId), this::mapper);
+    }
 
     public int insert(Task task) {
         sql = "INSERT INTO TASK (ID_STATUS, TASK_TEXT, DATE_BEGIN, PEOPLE_ID, PEOPLE_NAME, MESSAGE_ID, EMPLOYEE_ID, CATEGORY_ID) VALUES (?,?,?,?,?,?,?,?)";

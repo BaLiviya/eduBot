@@ -10,15 +10,15 @@ import java.util.List;
 
 public class TaskArchiveDao extends AbstractDao<TaskArchive> {
 
-    public void                  insert(String text, int taskId){
-        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID) VALUES(?,?)";
-        getJdbcTemplate().update(sql, text, taskId);
+    public void                  insert(String text, int taskId, String taskStatus){
+        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID, TASK_STATUS) VALUES(?,?, ?)";
+        getJdbcTemplate().update(sql, text, taskId, taskStatus);
     }
 
-    public void                  insert(String text, int taskId, String date){
-        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID, DATE ) VALUES(?,?,?)";
-        getJdbcTemplate().update(sql, text, taskId, date);
-    }
+//    public void                  insert(String text, int taskId, String date){
+//        sql = "INSERT INTO TASK_ARCHIVE (TEXT, TASK_ID, DATE ) VALUES(?,?,?)";
+//        getJdbcTemplate().update(sql, text, taskId, date);
+//    }
 
     public List<TaskArchive>  getTasksArchive(int id){
         sql = "SELECT * FROM TASK_ARCHIVE WHERE TASK_ID = ?";
@@ -42,6 +42,7 @@ public class TaskArchiveDao extends AbstractDao<TaskArchive> {
         taskArchive.setText(rs.getString(2));
         taskArchive.setTaskId(rs.getInt(3));
         taskArchive.setDate(rs.getString(4));
+        taskArchive.setTaskStatus(rs.getString(5));
         return taskArchive;
     }
 }
