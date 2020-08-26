@@ -99,4 +99,5 @@ public class Const {
     public static final int DEPARTMENTS_OF_UO                       = 21;
     public static final int STAFF_INFORMATION02                     = 22;
     public static final int DEPARTMENT_TITLE                        = 23;
+    public static final int EMPLOYEE                                = 29;
 }

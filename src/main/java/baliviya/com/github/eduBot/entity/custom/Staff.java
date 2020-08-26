@@ -3,8 +3,8 @@ package baliviya.com.github.eduBot.entity.custom;
 import lombok.Data;
 
 @Data
-public class Departments {
-    private int    id;
+public class Staff {
+    private int id;
     private String name;
-    private int    lang_id;
+    private int langId;
 }

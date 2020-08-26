@@ -1,14 +1,10 @@
 package baliviya.com.github.eduBot.command.impl;
 
 import baliviya.com.github.eduBot.command.Command;
-import baliviya.com.github.eduBot.dao.impl.StaffDao;
-import baliviya.com.github.eduBot.entity.custom.Departments;
-import baliviya.com.github.eduBot.entity.custom.Position;
+import baliviya.com.github.eduBot.entity.custom.*;
 import baliviya.com.github.eduBot.entity.enums.WaitingType;
-import baliviya.com.github.eduBot.entity.standart.Staff;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
 import baliviya.com.github.eduBot.util.Const;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -19,111 +15,111 @@ import java.util.List;
 
 public class id018_ShowStaffInfo extends Command {
 
-    private List<Position> positions;
-    private List<Departments> departments;
-    private List<Staff> staffs;
-    private List<String> list, list01, list02;
-    private ButtonsLeaf buttonsLeaf, buttonsLeaf01, buttonsLeaf02;
-    private Position position;
-    private Staff staff, staffDep;
-    private int currentId, deleteMessageId, deleteMessageId01;
-//    private Departments department;
-
+    private List<Staff> staffList;
+    private List<StaffInfo> staffInfosList;
+    private List<Departments> departmentsList;
+    private List<DepartmentsInfo> departmentsInfoList;
+    private List<String> nameList, depNamesList, staffDepNameList;
+    private StaffInfo staffInfo;
+    private Departments department;
+    private DepartmentsInfo departmentsInfo;
+    private ButtonsLeaf staffButtonsLeaf, depButtonsLeaf, staffDepButtonsLeaf;
+    private int photoMessageId, edit, deleteMessageId;
 
     @Override
     public boolean execute() throws TelegramApiException, IOException, SQLException {
+        if (!isAdmin()) {
+            sendMessage(Const.NO_ACCESS);
+            return EXIT;
+        }
+
         switch (waitingType) {
             case START:
                 deleteMessage(updateMessageId);
-                positions = factory.getPositionDao().getMenu(1);
-                list = new ArrayList<>();
-                positions.forEach((e) -> list.add(e.getPosition()));
-                buttonsLeaf = new ButtonsLeaf(list);
-                toDeleteKeyboard(sendMessageWithKeyboard(Const.STRUCTURE_OF_UO, buttonsLeaf.getListButton()));
-                waitingType = WaitingType.CHOOSE_POSITION;
+                staffList = staffDao.getAll();
+                nameList = new ArrayList<>();
+                staffList.forEach(e -> nameList.add(e.getName()));
+                staffButtonsLeaf = new ButtonsLeaf(nameList);
+                toDeleteKeyboard(sendMessageWithKeyboard(Const.STRUCTURE_OF_UO, staffButtonsLeaf.getListButton()));
+                waitingType = WaitingType.CHOOSE_STAFF;
                 return COMEBACK;
 
-            case CHOOSE_POSITION:
-                 if (Integer.parseInt(updateMessageText) != 4) {
+            case CHOOSE_STAFF:
+                if (Integer.parseInt(updateMessageText) != 4) {
                     deleteMessage(updateMessageId);
-                    staff = staffDao.getStaff(positions.get(Integer.parseInt(updateMessageText)).getId());
-                    position = positionDao.getPosition(staff.getPositionId());
-                    deleteMessageId = bot.execute(new SendPhoto().setPhoto(staff.getPhoto()).setChatId(chatId)).getMessageId();
-                     toDeleteKeyboard(sendMessageWithKeyboard(String.format(getText(Const.STAFF_INFORMATION), staff.getFullName(),
-                            position.getPosition(), staff.getPhone(), staff.getMPhone()),9));
-
-                    waitingType = WaitingType.BACK_BUTTON;
+                    staffInfo = staffInfoDao.getInfo(staffList.get(Integer.parseInt(updateMessageText)).getId());
+                    photoMessageId = bot.execute(new SendPhoto().setChatId(chatId).setPhoto(staffInfo.getPhoto())).getMessageId();
+                    toDeleteKeyboard(sendMessageWithKeyboard(staffInfo.getText(), 10));
+                    waitingType = WaitingType.STAFF_BACK_BUTTON;
                     return COMEBACK;
 
                 } else {
-                     deleteMessage(updateMessageId);
-                     departments = departmentDao.getAll();
-                     list01 = new ArrayList<>();
-                     departments.forEach((e) -> list01.add(e.getName()));
-                     list01.add("Назад");
-                     buttonsLeaf01 = new ButtonsLeaf(list01);
-                     toDeleteKeyboard(sendMessageWithKeyboard(Const.DEPARTMENTS_OF_UO, buttonsLeaf01.getListButton()));
-                     waitingType = WaitingType.CHOOSE_DEPARTMENT;
-                     return COMEBACK;
-                 }
 
-            case CHOOSE_DEPARTMENT:
-                if (list01.get(Integer.parseInt(updateMessageText)).equals("Назад")){
                     deleteMessage(updateMessageId);
-                    btnBack(list, buttonsLeaf, Const.STRUCTURE_OF_UO);
-                    waitingType = WaitingType.CHOOSE_POSITION;
+                    departmentsList = departmentsDao.getAll();
+                    depNamesList = new ArrayList<>();
+                    departmentsList.forEach((e) -> depNamesList.add(e.getName()));
+                    depNamesList.add("Назад");
+                    depButtonsLeaf = new ButtonsLeaf(depNamesList);
+                    toDeleteKeyboard(sendMessageWithKeyboard(Const.DEPARTMENTS_OF_UO, depButtonsLeaf.getListButton()));
+                    waitingType = WaitingType.CHOOSE_DEPARTMENT;
                     return COMEBACK;
                 }
-                    currentId = Integer.parseInt(updateMessageText);
-//                list.clear();
+
+            case CHOOSE_DEPARTMENT:
+                if (depNamesList.get(Integer.parseInt(updateMessageText)).equals("Назад")) {
                     deleteMessage(updateMessageId);
-                    staffs = staffDao.getStaffDepart(departments.get(Integer.parseInt(updateMessageText)).getId());
-                    list02 = new ArrayList<>();
-                    staffs.forEach((e) -> list02.add(e.getFullName()));
-                    list02.add("Назад");
-                    buttonsLeaf02 = new ButtonsLeaf(list02);
-                    toDeleteKeyboard(sendMessageWithKeyboard(Const.DEPARTMENT_TITLE, buttonsLeaf02.getListButton()));
-                    waitingType = waitingType.STAFF_DEPART;
+                    btnBack(nameList, staffButtonsLeaf, Const.DEPARTMENTS_OF_UO);
+                    waitingType = WaitingType.CHOOSE_STAFF;
                     return COMEBACK;
+                }
+                deleteMessage(updateMessageId);
+                departmentsInfoList = departmentsInfoDao.getDepartmentInfo(departmentsList.get(Integer.parseInt(updateMessageText)).getId());
+                staffDepNameList = new ArrayList<>();
+                departmentsInfoList.forEach((e) -> staffDepNameList.add(e.getName()));
+                staffDepNameList.add("Назад");
+                staffDepButtonsLeaf = new ButtonsLeaf(staffDepNameList);
+                toDeleteKeyboard(sendMessageWithKeyboard(Const.DEPARTMENT_TITLE, staffDepButtonsLeaf.getListButton()));
+                waitingType = WaitingType.CHOOSE_STAFF_OF_DEPARTMENT;
+                return COMEBACK;
 
-
-
-            case STAFF_DEPART:
-                if (list02.get(Integer.parseInt(updateMessageText)).equals("Назад")){
+            case CHOOSE_STAFF_OF_DEPARTMENT:
+                if (staffDepNameList.get(Integer.parseInt(updateMessageText)).equals("Назад")) {
                     deleteMessage(updateMessageId);
-                    btnBack(list01, buttonsLeaf01, Const.DEPARTMENTS_OF_UO);
+                    btnBack(depNamesList, depButtonsLeaf, Const.DEPARTMENT_TITLE);
                     waitingType = WaitingType.CHOOSE_DEPARTMENT;
                     return COMEBACK;
                 }
                 deleteMessage(updateMessageId);
-                List<Staff> staffStaff = new ArrayList<>();
-                staffStaff = staffDao.getAll(currentId + 1);
-                staffDep = staffStaff.get(Integer.parseInt(updateMessageText));
-                deleteMessageId01 = bot.execute(new SendPhoto().setPhoto(staffDep.getPhoto()).setChatId(chatId)).getMessageId();
-                toDeleteKeyboard( sendMessageWithKeyboard(String.format(getText(Const.STAFF_INFORMATION02),
-                        staffDep.getFullName(), staffDep.getPhone(), staffDep.getMPhone()),9));
-                waitingType = WaitingType.BACK_BUTTON01;
+                department = departmentsDao.getDepartmentsById(departmentsInfoList.get(Integer.parseInt(updateMessageText)).getDepartmentsId());
+                departmentsInfo = departmentsInfoDao.getInfo(departmentsInfoList.get(Integer.parseInt(updateMessageText)).getPositionId(), department.getId());
+                photoMessageId = bot.execute(new SendPhoto().setChatId(chatId).setPhoto(departmentsInfo.getPhoto())).getMessageId();
+                toDeleteKeyboard(sendMessageWithKeyboard(departmentsInfo.getText(), 10));
+                waitingType = WaitingType.DEP_BACK_BUTTON;
                 return COMEBACK;
 
 
-            case BACK_BUTTON:
-                deleteMessage(deleteMessageId);
-                if (isButton(1004)){
+            case STAFF_BACK_BUTTON:
+                if (isButton(1004)) {
+//                    deleteMessage(deleteMessageId);
                     deleteMessage(updateMessageId);
-                    btnBack(list, buttonsLeaf, Const.STRUCTURE_OF_UO);
-                    waitingType = WaitingType.CHOOSE_POSITION;
+                    deleteMessage(photoMessageId);
+                    deleteMessage(edit);
+                    btnBack(nameList, staffButtonsLeaf, Const.STRUCTURE_OF_UO);
+                    waitingType = WaitingType.CHOOSE_STAFF;
                     return COMEBACK;
                 }
 
-            case BACK_BUTTON01:
-                deleteMessage(deleteMessageId01);
-                if(isButton(1004)){
+            case DEP_BACK_BUTTON:
+                if (isButton(1004)) {
+//                    deleteMessage(deleteMessageId);
                     deleteMessage(updateMessageId);
-                    btnBack(list02, buttonsLeaf02, Const.DEPARTMENT_TITLE);
-                    waitingType = WaitingType.STAFF_DEPART;
+                    deleteMessage(photoMessageId);
+                    deleteMessage(edit);
+                    btnBack(staffDepNameList, staffDepButtonsLeaf, Const.DEPARTMENT_TITLE);
+                    waitingType = WaitingType.CHOOSE_STAFF_OF_DEPARTMENT;
                     return COMEBACK;
                 }
-
         }
         return EXIT;
     }
@@ -132,7 +128,4 @@ public class id018_ShowStaffInfo extends Command {
         buttonsLeaf = new ButtonsLeaf(list);
         toDeleteKeyboard(sendMessageWithKeyboard(a, buttonsLeaf.getListButton()));
     }
-
 }
-
-

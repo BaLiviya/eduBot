@@ -44,6 +44,12 @@ public class CommandFactory {
                 return new id017_EditAdmin();
             case 18:
                 return new id018_ShowStaffInfo();
+            case 19:
+                return new id019_AddCategoryForEmployee();
+            case 20:
+                return new id020_EditorEmployee();
+            case 21:
+                return new id021_EditorSpecial();
             case 500:
                 return new id500_Map();
             case 501:
@@ -62,8 +68,7 @@ public class CommandFactory {
                 return new id603_EditEvent();
             case 604:
                 return new id604_EditMenu();
-            case 20000:
-                return new TestSendFile();
+
 
         }
         return null;

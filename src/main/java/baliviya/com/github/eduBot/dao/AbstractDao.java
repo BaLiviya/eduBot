@@ -44,4 +44,5 @@ public abstract class AbstractDao <T> {
     private static DataSource           getDataSource() {   return DaoFactory.getDataSource();}
 
     private long                        getChatId() {       return Conversation.getCurrentChatId(); }
+
 }

@@ -24,6 +24,12 @@ public class UserDao extends AbstractDao<User> {
         return getJdbcTemplate().queryForObject(sql, setParam(chatId), this::mapper);
     }
 
+    public List<User>         getUsersByChatId(long chatId) {
+        sql = "SELECT * FROM USERS WHERE CHAT_ID = ?";
+        return getJdbcTemplate().query(sql, setParam(chatId), this::mapper);
+    }
+
+
     public boolean      isRegistered(long chatId) {
         sql = "SELECT count(*) FROM USERS WHERE CHAT_ID = ?";
         return getJdbcTemplate().queryForObject(sql, setParam(chatId), Integer.class) > 0;
@@ -36,6 +42,16 @@ public class UserDao extends AbstractDao<User> {
 
     public List<User>   getAll() {
         sql = "SELECT * FROM USERS";
+        return getJdbcTemplate().query(sql, this::mapper);
+    }
+
+    public List<User>      getAllByEmployeeChatId(){
+        sql = "SELECT DISTINCT USERS.ID, USERS.CHAT_ID, USERS.PHONE, USERS.FULL_NAME, USERS.USER_NAME FROM USERS INNER JOIN EMPLOYEE_CATEGORY ON USERS.CHAT_ID=EMPLOYEE_CATEGORY.EMPLOYEE_CHAT_ID";
+        return getJdbcTemplate().query(sql, this::mapper);
+    }
+
+    public List<User>      getAllByStaffChatID(){
+        sql = "SELECT DISTINCT USERS.ID, USERS.CHAT_ID, USERS.PHONE, USERS.FULL_NAME, USERS.USER_NAME FROM USERS INNER JOIN STAFF ON USERS.CHAT_ID = STAFF.STAFF_CHAT_ID";
         return getJdbcTemplate().query(sql, this::mapper);
     }
 

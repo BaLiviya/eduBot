@@ -22,7 +22,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>baliviya.com.github.eduBot.Main</mainClass>
+                                    <mainClass>src.main.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

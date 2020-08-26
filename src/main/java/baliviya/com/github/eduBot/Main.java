@@ -1,5 +1,4 @@
 package baliviya.com.github.eduBot;
-
 import baliviya.com.github.eduBot.config.Bot;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -20,5 +19,5 @@ public class Main {
         } catch (TelegramApiRequestException e) {
             log.error("Error in main class", e);
         }
-    }
+    } 
 }

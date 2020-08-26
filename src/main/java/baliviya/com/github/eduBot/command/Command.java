@@ -73,9 +73,11 @@ public abstract class Command {
     protected static DocumentDao            documentDao             = factory.getDocumentDao();
     protected static CitizensButtonsDao     citizensButtonsDao      = factory.getCitizensButtonDao();
     protected static TempMessageDao         tempMessageDao          = factory.getTempMessageDao();
-    protected static PositionDao            positionDao             = factory.getPositionDao();
     protected static StaffDao               staffDao                = factory.getStaffDao();
-    protected static DepartmentDao          departmentDao           = factory.getDepartmentDao();
+    protected static StaffInfoDao           staffInfoDao            = factory.getStaffInfoDao();
+    protected static DepartmentsDao         departmentsDao          = factory.getDepartmentsDao();
+    protected static DepartmentsInfoDao     departmentsInfoDao      = factory.getDepartmentsInfoDao();
+
 
 
     public abstract boolean execute()                                                           throws TelegramApiException, IOException, SQLException;
@@ -192,6 +194,8 @@ public abstract class Command {
     protected String        getLinkForUser(long chatId, String userName) {
         return String.format("<a href = \"tg://user?id=%s\">%s</a>", chatId, userName);
     }
+
+
 
     protected String        getText(int messageIdFromDb) {
         return messageDao.getMessageText(messageIdFromDb);
