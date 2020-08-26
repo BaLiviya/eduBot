@@ -1,11 +1,15 @@
 package baliviya.com.github.eduBot.command.impl;
 
 import baliviya.com.github.eduBot.command.Command;
+import baliviya.com.github.eduBot.entity.custom.CitizensEmployee;
+import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
 import baliviya.com.github.eduBot.entity.custom.CitizensRegistration;
 import baliviya.com.github.eduBot.entity.custom.Reception;
 import baliviya.com.github.eduBot.entity.enums.WaitingType;
 import baliviya.com.github.eduBot.util.ButtonsLeaf;
 import baliviya.com.github.eduBot.util.Const;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
@@ -25,8 +29,8 @@ public class id005_Citizens extends Command {
         deleteMessage(updateMessageId);
         switch (waitingType) {
             case START:
-                //CitizensInfo citizensInfo = factory.getCitizensInfoDao().get();
-                //if (citizensInfo.getDocument() != null) bot.execute(new SendDocument().setDocument(citizensInfo.getDocument()).setChatId(chatId));
+//                CitizensInfo citizensInfo = factory.getCitizensInfoDao().get();
+//                if (citizensInfo.getDocument() != null) bot.execute(new SendDocument().setDocument(citizensInfo.getDocument()).setChatId(chatId));
                 receptions = factory.getReceptionDao().getAll();
                 list = new ArrayList<>();
                 receptions.forEach(e -> list.add(e.getName()));
@@ -42,7 +46,7 @@ public class id005_Citizens extends Command {
                     citizensRegistration.setChatId(chatId);
                     citizensRegistration.setReceptionId(receptions.get(Integer.parseInt(updateMessageText)).getId());
                     citizensRegistration.setStatus("Записан");
-                    citizensRegistration.setDate(factory.getCitizensInfoDao().getById(reception.getId()) == null ? null : factory.getCitizensInfoDao().getById(reception.getId()).getDate());
+                    citizensRegistration.setCitizensDate(factory.getCitizensInfoDao().getById(reception.getId()).getDate());
                     citizensRegistration.setCitizensTime(factory.getCitizensInfoDao().getById(reception.getId()) == null ? null : factory.getCitizensInfoDao().getById(reception.getId()).getTime());
                     getFullName();
                     waitingType = WaitingType.SET_FULL_NAME;
@@ -74,11 +78,27 @@ public class id005_Citizens extends Command {
                     citizensRegistration.setDate(new Date());
                     factory.getCitizensRegistrationDao().insert(citizensRegistration);
                     sendMessage(String.format(getText(524),userDao.getUserByChatId(chatId).getFullName(),reception.getName())); // Уважаемый вы записаны на ...
+                    sendMessageToEmployee(userDao.getUserByChatId(citizensRegistration.getChatId()).getFullName());
                     return EXIT;
                 }
             return COMEBACK;
         }
         return EXIT;
+    }
+
+    private void sendMessageToEmployee(String name) {
+        StringBuilder messageToEmployee = new StringBuilder();
+        messageToEmployee.append("<b>К вам записались.  </b>" ).append(next);
+        messageToEmployee.append("<b>Заявитель : </b>").append(name).append(next);
+        messageToEmployee.append("<b>Текст обращения :</b>").append(citizensRegistration.getQuestion()).append(next);
+        for (CitizensEmployee employee : factory.getCitizensEmployeeDao().getList(citizensRegistration.getReceptionId())){
+            long directId = employee.getChatId();
+            try {
+                sendMessage(messageToEmployee.toString(), directId);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private int getQuestion() throws TelegramApiException { return botUtils.sendMessage(Const.SET_QUESTION,chatId);    }

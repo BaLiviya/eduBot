@@ -2,6 +2,7 @@ package baliviya.com.github.eduBot.dao.impl;
 
 import baliviya.com.github.eduBot.dao.AbstractDao;
 import baliviya.com.github.eduBot.entity.custom.Category;
+import baliviya.com.github.eduBot.service.LanguageService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +23,16 @@ public class CategoryDao extends AbstractDao<Category> {
     public List<Category>            getAll() {
         sql = "SELECT * FROM CATEGORY WHERE LANG_ID = ?";
         return getJdbcTemplate().query(sql, setParam(getLanguage().getId()), this::mapper);
+    }
+    
+    public Category getCategoryById(int id){
+        sql = "SELECT * FROM CATEGORY WHERE ID = ? AND LANG_ID = ?";
+        return getJdbcTemplate().queryForObject(sql,setParam(id, getLanguage().getId()), this::mapper);
+    }
+    
+    public Category getCategoryByName(String name){
+        sql = "SELECT * FROM CATEGORY WHERE NAME = ? AND LANG_ID = ?";
+        return getJdbcTemplate().queryForObject(sql, setParam(name, getLanguage().getId()), this::mapper);
     }
 
     public void                      delete(int id){

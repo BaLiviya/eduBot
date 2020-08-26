@@ -22,6 +22,7 @@ public class id014_DoneTask extends Command {
         switch (waitingType){
             case START:
                 deleteMessage(updateMessageId);
+                // кнопка выполнена buttonId 20
                 if(isButton(20)){
                     String text        = update.getCallbackQuery().getMessage().getText();
                     int id             = Integer.parseInt(text.split(next)[0].replaceAll("[^0-9]",""));
@@ -37,7 +38,7 @@ public class id014_DoneTask extends Command {
                 deleteMessage (updateMessageId);
                 deleteMessage(deleteMessageId);
                 if(hasMessageText()){
-                    taskArchiveDao.insert("<b>Выполнено</b>:" + updateMessageText, task.getId());
+                    taskArchiveDao.insert(updateMessageText, task.getId(),getText(536));//messageId 536 - выполнено
                     closeTask();
                     return COMEBACK;
                 }
@@ -46,6 +47,7 @@ public class id014_DoneTask extends Command {
     }
 
     private void closeTask() throws TelegramApiException {
+        //статус 1 - выполнено
         factory.getTaskDao().updateStatus(task.getId(),1);
         task                            = factory.getTaskDao().get(task.getId());
         List<TaskArchive> taskArchive   = taskArchiveDao.getTasksArchive(task.getId());
@@ -58,11 +60,13 @@ public class id014_DoneTask extends Command {
         sb.append("Обращение #").append(task.getId()).append(next);
         if(taskArchive.size() != 0){
             for(TaskArchive taskA : taskArchive){
+                sb.append(taskA.getTaskStatus()).append(next);
                 sb.append(taskA.getText()).append(next);
             }
         }
         sb.append("<b>Ответственный : ").append(employeeName).append("</b>\n");
         sendMessage(sb.toString(), task.getPeopleId());
+        //keyboard id 1 - главное меню
         sendMessageWithKeyboard("Ответ отправлен",1);
 
     }

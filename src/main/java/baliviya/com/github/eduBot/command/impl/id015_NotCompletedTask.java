@@ -36,7 +36,7 @@ public class id015_NotCompletedTask extends Command {
                 deleteMessage(updateMessageId);
                 deleteMessage(deleteMessageId);
                 if (hasMessageText()) {
-                    taskArchiveDao.insert("<b>Не выполнено</b>:" + updateMessageText, task.getId());
+                    taskArchiveDao.insert(updateMessageText, task.getId(), getText(537)); // messageId 537 - Не выполнено
                     closeTask();
                     return COMEBACK;
                 }
@@ -59,6 +59,12 @@ public class id015_NotCompletedTask extends Command {
         if(taskArchive.size() != 0){
             for(TaskArchive taskA : taskArchive){
                 sb.append(taskA.getText()).append(next);
+            }
+        }
+        sb.append("<b>Статус : ").append("</b>");
+        if (taskArchive.size() != 0) {
+            for (TaskArchive taskArchive1 : taskArchive){
+                sb.append(taskArchive1.getTaskStatus()).append(next);
             }
         }
         sb.append("<b>Ответственный : ").append(employeeName).append("</b>\n");
