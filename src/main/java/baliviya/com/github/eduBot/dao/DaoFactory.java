@@ -1,6 +1,7 @@
 package baliviya.com.github.eduBot.dao;
 
 import baliviya.com.github.eduBot.dao.impl.*;
+import baliviya.com.github.eduBot.entity.custom.CitizensEmployee;
 import baliviya.com.github.eduBot.entity.custom.CitizensInfo;
 import baliviya.com.github.eduBot.entity.custom.Quest;
 import baliviya.com.github.eduBot.util.PropertiesUtil;
@@ -81,4 +82,6 @@ public class DaoFactory {
     public TempMessageDao                       getTempMessageDao()             {return new TempMessageDao(); }
     
     public ReminderTaskDao                      getReminderTaskDao()            {return new ReminderTaskDao();}
+    
+    public CitizensEmployeeDao                  getCitizensEmployeeDao()        {return new CitizensEmployeeDao(); }
 }

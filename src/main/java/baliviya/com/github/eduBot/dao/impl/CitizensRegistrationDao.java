@@ -23,7 +23,7 @@ public class CitizensRegistrationDao extends AbstractDao<CitizensRegistration> {
     }
 
     public List<CitizensRegistration> getRegistrationByTime(Date dateBegin, Date deadline, int reception_id) {
-        sql = "SELECT * FROM CITIZENS_REGISTRATION WHERE DATE BETWEEN to_date(?, 'YYYY-MM-DD HH:mm:SS') AND to_date(?, 'YYYY-MM-DD HH:mm:SS') AND RECEPTION_ID = ? ORDER BY ID";
+        sql = "SELECT * FROM CITIZENS_REGISTRATION WHERE DATE BETWEEN ? AND ? AND RECEPTION_ID = ? ORDER BY ID";
         return getJdbcTemplate().query(sql, setParam(dateBegin,deadline,reception_id), this::mapper);
     }
 

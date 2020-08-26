@@ -33,4 +33,9 @@ public class CitizensInfoDao extends AbstractDao<CitizensInfo> {
         citizensInfo.setTime(rs.getString(4));
         return citizensInfo;
     }
+
+    public CitizensInfo get() {
+        sql = "SELECT * FROM CITIZENS_INFO WHERE ID = ?";
+        return getJdbcTemplate().queryForObject(sql, setParam(100), this::mapper);
+    }
 }
