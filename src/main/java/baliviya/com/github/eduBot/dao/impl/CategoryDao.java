@@ -2,6 +2,7 @@ package baliviya.com.github.eduBot.dao.impl;
 
 import baliviya.com.github.eduBot.dao.AbstractDao;
 import baliviya.com.github.eduBot.entity.custom.Category;
+import baliviya.com.github.eduBot.entity.custom.Reception;
 import baliviya.com.github.eduBot.service.LanguageService;
 
 import java.sql.ResultSet;
@@ -62,5 +63,10 @@ public class CategoryDao extends AbstractDao<Category> {
         category.setName(rs.getString(2));
         category.setLangId(rs.getInt(3));
         return category;
+    }
+
+    public void insert(Category category){
+        sql = "INSERT INTO CATEGORY(NAME, LANG_ID) VALUES(?, ?)";
+        getJdbcTemplate().update(sql, category.getName(), getLanguage().getId());
     }
 }

@@ -81,4 +81,8 @@ public class DaoFactory {
     public DepartmentsDao                       getDepartmentsDao() {        return new DepartmentsDao();}
 
     public DepartmentsInfoDao                   getDepartmentsInfoDao() {    return new DepartmentsInfoDao();}
+
+    public CitizensEmployeeDao                  getCitizensEmployeeDao() {   return new CitizensEmployeeDao(); }
+
+    public ReminderTaskDao                      getReminderTaskDao() {        return new ReminderTaskDao();    }
 }
