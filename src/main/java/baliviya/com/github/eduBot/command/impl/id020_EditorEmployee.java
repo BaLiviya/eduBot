@@ -19,6 +19,7 @@ public class id020_EditorEmployee extends Command {
     private Category category;
     private Category newCategoryRu, newCategoryKz;
     private int deleteMessageId;
+    private Language currentLanguage = Language.ru;
 //    private Category currentId;
 
     @Override
@@ -76,6 +77,8 @@ public class id020_EditorEmployee extends Command {
                         sendListCategory();
                         waitingType = WaitingType.CHOOSE_CATEGORY;
                         return COMEBACK;
+                    } else if(isCommand("/swap")){
+                        changeLanguage();
                     }
                     return COMEBACK;
                 }
@@ -118,7 +121,7 @@ public class id020_EditorEmployee extends Command {
                 deleteMessage(deleteMessageId);
                 if (hasMessageText()) {
                     category.setName(updateMessageText);
-                    categoryDao.update(category);
+                    categoryDao.updateByLangId(category);
                     sendCategoryInfo();
                     waitingType = WaitingType.EDITION;
                     return COMEBACK;
@@ -158,7 +161,13 @@ public class id020_EditorEmployee extends Command {
 
     private void sendCategoryInfo() throws TelegramApiException {
         String formatMessage = getText(28);
-        deleteMessageId = sendMessage(String.format(formatMessage, category.getName(), "/edit", "/drop", "/back"));
+        String languageInfo = null;
+        if (category.getLangId() == 1) {
+            languageInfo = "\uD83C\uDDF7\uD83C\uDDFA ru";
+        } else if (category.getLangId() == 2) {
+            languageInfo = "\uD83C\uDDF0\uD83C\uDDFF kz";
+        }
+        deleteMessageId = sendMessage(String.format(formatMessage, category.getName(), languageInfo, "/swap","/edit", "/drop", "/back"));
     }
 
     private boolean registerNewEmployee() throws TelegramApiException {
@@ -188,5 +197,15 @@ public class id020_EditorEmployee extends Command {
         return Integer.parseInt(updateMessageText.replaceAll("[^0-9]", ""));
     }
 
+    private void changeLanguage() throws TelegramApiException {
+        if (currentLanguage == Language.ru){
+            currentLanguage = Language.kz;
+        } else {
+            currentLanguage = Language.ru;
+        }
+        category = categoryDao.getAllCategoryByLangId(category.getId(), currentLanguage);
+        sendCategoryInfo();
+        waitingType = WaitingType.EDITION;
+    }
 
 }

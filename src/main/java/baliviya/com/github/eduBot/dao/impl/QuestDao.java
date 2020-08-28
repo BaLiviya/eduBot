@@ -14,18 +14,38 @@ public class QuestDao extends AbstractDao<Quest> {
 
 
     public List<Quest> getAll(){
-        sql = "SELECT * FROM SURVEY_QUEST";
-        return getJdbcTemplate().query(sql, this::mapper);
+        sql = "SELECT * FROM SURVEY_QUEST WHERE LANG_ID = ?";
+        return getJdbcTemplate().query(sql, setParam(getLanguage().getId()), this::mapper);
     }
 
-    public List<Quest> getAllSuggestionType(){
-        sql = "SELECT * FROM SUGGESTION_TYPE";
-        return getJdbcTemplate().query(sql, this::mapper);
+    public List<Quest> getAllByLangId(Language language){
+        sql = "SELECT * FROM SURVEY_QUEST WHERE LANG_ID = ?";
+        return getJdbcTemplate().query(sql, setParam(language.getId()), this::mapper);
     }
 
-    public void insert (Quest quest){
-        sql = "INSERT INTO SURVEY_QUEST(NAME) VALUES(?)";
-        getJdbcTemplate().update(sql, quest.getName());
+    public Quest getById(int id){
+        sql ="SELECT * FROM SURVEY_QUEST WHERE ID = ? AND LANG_ID = ?";
+        return getJdbcTemplate().queryForObject(sql, setParam(id,getLanguage().getId()), this::mapper);
+    }
+
+    public Quest getAllById(int id, Language language){
+        sql = "SELECT * FROM SURVEY_QUEST WHERE ID = ? AND LANG_ID = ?";
+        return getJdbcTemplate().queryForObject(sql, setParam(id, language.getId()), this::mapper);
+    }
+
+    public Quest getTextById(Quest quest){
+        sql = "SELECT * FROM SURVEY_QUEST WHERE NAME = ? AND LANG_ID = ?";
+        return getJdbcTemplate().queryForObject(sql, setParam(quest.getName(), quest.getLangId()), this::mapper);
+    }
+
+    public int insertRu (Quest quest){
+        sql = "INSERT INTO SURVEY_QUEST(NAME, LANG_ID) VALUES(?,?)";
+        return (int) getDBUtils().updateForKeyId(sql, quest.getName(), quest.getLangId());
+    }
+
+    public void insertKz (Quest quest){
+        sql  = "INSERT INTO SURVEY_QUEST(ID, NAME, LANG_ID) VALUES (?,?,?)";
+        getJdbcTemplate().update(sql, quest.getId(), quest.getName(), quest.getLangId());
     }
 
     public void delete(int questId){
@@ -33,36 +53,19 @@ public class QuestDao extends AbstractDao<Quest> {
         getJdbcTemplate().update(sql, questId);
     }
 
-    public Quest getById(int id){
-        sql ="SELECT * FROM SURVEY_QUEST WHERE ID = ?";
-        return getJdbcTemplate().queryForObject(sql, setParam(id), this::mapper);
-    }
-
     public void update(Quest quest) {
-        sql = "UPDATE SURVEY_QUEST  SET NAME = ? WHERE ID = ?";
-        getJdbcTemplate().update(sql, quest.getName(), quest.getId());
+        sql = "UPDATE SURVEY_QUEST  SET NAME = ? WHERE ID = ? AND LANG_ID = ?";
+        getJdbcTemplate().update(sql, quest.getName(), quest.getId(), quest.getLangId());
     }
 
-    public void updateSuggestionType(Quest suggestionType){
-        sql = "UPDATE SUGGESTION_TYPE SET NAME = ? WHERE ID = ?";
-        getJdbcTemplate().update(sql, suggestionType.getName(), suggestionType.getId());
-    }
 
-    public void deleteSuggestionType(int suggestionType){
-        sql = "DELETE FROM SUGGESTION_TYPE WHERE ID = ?";
-        getJdbcTemplate().update(sql, suggestionType);
-    }
-
-    public void insertSuggestionType(Quest suggestionType){
-        sql = "INSERT INTO SUGGESTION_TYPE(NAME) VALUES(?)";
-        getJdbcTemplate().update(sql, suggestionType.getName());
-    }
 
     @Override
     protected Quest mapper(ResultSet rs, int index) throws SQLException {
-        Quest appealType = new Quest();
-        appealType.setId(rs.getInt(1));
-        appealType.setName(rs.getString(2));
-        return appealType;
+        Quest quest = new Quest();
+        quest.setId(rs.getInt(1));
+        quest.setName(rs.getString(2));
+        quest.setLangId(rs.getInt(3));
+        return quest;
     }
 }

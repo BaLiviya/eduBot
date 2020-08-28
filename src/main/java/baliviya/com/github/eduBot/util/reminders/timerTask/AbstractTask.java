@@ -14,7 +14,7 @@ public abstract class AbstractTask extends TimerTask {
 	protected Bot               bot;
 	protected Reminder reminder;
 	protected DaoFactory        factory         = DaoFactory.getInstance();
-	protected ReminderTaskDao   reminderTaskDao = factory.getReminderTaskDao();
+//	protected ReminderTaskDao   reminderTaskDao = factory.getReminderTaskDao();
 	protected UserDao           userDao         =factory.getUserDao();
 	protected TaskDao           taskDao         = factory.getTaskDao();
 	

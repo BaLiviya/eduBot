@@ -2,7 +2,7 @@ package baliviya.com.github.eduBot.util.reminders;
 
 import baliviya.com.github.eduBot.config.Bot;
 import baliviya.com.github.eduBot.util.DateUtil;
-import baliviya.com.github.eduBot.util.reminders.timerTask.MorningTask;
+//import baliviya.com.github.eduBot.util.reminders.timerTask.MorningTask;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -22,8 +22,8 @@ public class Reminder {
 	public void setMorningTask() {
 //		Date date = DateUtil.getHour(hour);
 		log.info(String.format("next check db task set to %s", new Date()));
-		MorningTask checkMorningTask = new MorningTask(bot, this);
-		timer.schedule(checkMorningTask, new Date());
+		//MorningTask checkMorningTask = new MorningTask(bot, this);
+		//timer.schedule(checkMorningTask, new Date());
 		
 		
 	}

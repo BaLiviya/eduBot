@@ -7,4 +7,5 @@ public class Quest {
 
     private int     id;
     private String  name;
+    private int     langId;
 }

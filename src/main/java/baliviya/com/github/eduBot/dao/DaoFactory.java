@@ -54,6 +54,8 @@ public class DaoFactory {
 
     public CitizensRegistrationDao              getCitizensRegistrationDao(){return new CitizensRegistrationDao();    }
 
+    public CitizensEmployeeDao                  getCitizensEmployeeDao()     {return new CitizensEmployeeDao();}
+
     public MapDao                               getMapDao() {               return new MapDao(); }
 
     public EventDao                             getEventDao() {             return new EventDao();}
@@ -81,4 +83,6 @@ public class DaoFactory {
     public DepartmentsDao                       getDepartmentsDao() {        return new DepartmentsDao();}
 
     public DepartmentsInfoDao                   getDepartmentsInfoDao() {    return new DepartmentsInfoDao();}
+
+    public ReminderTaskDao                      getReminderTaskDao()    { return new ReminderTaskDao();}
 }
