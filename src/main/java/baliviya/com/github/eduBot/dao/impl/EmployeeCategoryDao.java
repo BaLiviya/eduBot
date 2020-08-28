@@ -1,6 +1,7 @@
 package baliviya.com.github.eduBot.dao.impl;
 
 import baliviya.com.github.eduBot.dao.AbstractDao;
+import baliviya.com.github.eduBot.entity.custom.CitizensEmployee;
 import baliviya.com.github.eduBot.entity.custom.EmployeeCategory;
 
 import java.sql.ResultSet;
@@ -8,6 +9,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EmployeeCategoryDao extends AbstractDao<EmployeeCategory> {
+
+    public List<EmployeeCategory> getList(int categoryId) {
+        sql = "SELECT * FROM EMPLOYEE_CATEGORY WHERE CATEGORY_ID = ?";
+        return getJdbcTemplate().query(sql,setParam(categoryId),this::mapper);
+    }
 
     public List<EmployeeCategory>       getNonRepeatingId(){
         sql         = "SELECT DISTINCT EMPLOYEE_CHAT_ID FROM EMPLOYEE_CATEGORY ";
@@ -29,6 +35,12 @@ public class EmployeeCategoryDao extends AbstractDao<EmployeeCategory> {
     public boolean                       isEmployee(int categoryId, long employeeChatId){
         sql          = "SELECT count(*) FROM EMPLOYEE_CATEGORY WHERE CATEGORY_ID = ? AND  EMPLOYEE_CHAT_ID = ?";
         int count    = getJdbcTemplate().queryForObject(sql, setParam(categoryId, employeeChatId), Integer.class);
+        if (count > 0) return true;
+        return false;
+    }
+    public boolean isEmployee(long newEmpChatId, int receptionId) {
+        sql = "SELECT count(*) FROM EMPLOYEE_CATEGORY WHERE EMPLOYEE_CHAT_ID = ? AND CATEGORY_ID = ?";
+        int count = getJdbcTemplate().queryForObject(sql, setParam(newEmpChatId, receptionId), Integer.class);
         if (count > 0) return true;
         return false;
     }
